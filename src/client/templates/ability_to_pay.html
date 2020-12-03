@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="main-header">
+        <h1>Monthly Ability-To-Pay Fee Calculator</h1>
+        <br>
+        {% for message in form.income.errors %}
+        <div style="color:rgb(255,0,0)"><strong>{{ message }}</strong></div>
+        {% endfor %}
+
+        {% for message in form.size.errors %}
+        <div style="color:rgb(255,0,0)"><strong>{{ message }}</strong></div>
+        {% endfor %}
+        <br>
+        <br>
+
+        <form method=POST action="{{ url_for('ability_to_pay_views.ability_to_pay') }}">
+            <fieldset>
+                {{ form.hidden_tag() }}
+                <div>
+                    {{ form.income.label }}
+                    {{ form.income }}
+                    <br>
+                    <br>
+                    {{ form.size.label }}
+                    {{ form.size }}
+                    <br>
+                    <br>
+                    {{ form.submit }}
+                    <br>
+                    <br>
+                </div>
+            </fieldset>
+        </form>
+        {% if fee %}
+        <div style="font-size: 20px">
+            {{ fee }}
+        </div>
+        {% endif %}
+    </div>
+{% endblock content %}
