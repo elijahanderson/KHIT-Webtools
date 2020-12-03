@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request
 
 from client.forms.ability_to_pay_form import AbilityToPayForm
-from src.infrastructure.ability_to_pay import max_monthly_fee
+from infrastructure.ability_to_pay import max_monthly_fee
 
 ability_to_pay_blueprint = Blueprint('ability_to_pay_views', __name__, template_folder='templates')
 
