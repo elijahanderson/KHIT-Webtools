@@ -4,11 +4,11 @@
         <h1>Monthly Ability-To-Pay Fee Calculator</h1>
         <br>
         {% for message in form.income.errors %}
-        <div>{{ message }}</div>
+        <div style="color:rgb(255,0,0)"><strong>{{ message }}</strong></div>
         {% endfor %}
 
         {% for message in form.size.errors %}
-        <div>{{ message }}</div>
+        <div style="color:rgb(255,0,0)"><strong>{{ message }}</strong></div>
         {% endfor %}
         <br>
         <br>
@@ -32,7 +32,7 @@
             </fieldset>
         </form>
         {% if fee %}
-        <div>
+        <div style="font-size: 20px">
             {{ fee }}
         </div>
         {% endif %}
