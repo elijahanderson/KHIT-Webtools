@@ -1,6 +1,6 @@
 from flask import Flask
 
-from src.client.views.home_page import home_page
+from client.views.home_page import home_page
 
 """ Initializes the app. """
 app = Flask(__name__)
