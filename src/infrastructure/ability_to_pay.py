@@ -1,4 +1,5 @@
-def max_monthly_fee(income, size):
+def max_monthly_fee(income, size, extra_expenses):
+    income = income - extra_expenses
     if income < 1595.0:
         return 0
     elif 1595 <= income < 1782:

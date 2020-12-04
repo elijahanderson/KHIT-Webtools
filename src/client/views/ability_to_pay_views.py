@@ -14,6 +14,7 @@ def ability_to_pay():
         if form.validate_on_submit():
             income = form.income.data
             size = form.size.data
-            fee = 'The maximum monthly fee is $%s' % str(max_monthly_fee(income, size))
+            extra_expenses = form.extra_expenses.data if form.extra_expenses.data else 0
+            fee = 'The maximum monthly fee is $%s' % str(max_monthly_fee(income, size, extra_expenses))
             return render_template('ability_to_pay.html', title='Ability to Pay Calculator', fee=fee, form=form)
     return render_template('ability_to_pay.html', title='Ability to Pay Calculator', form=form)
