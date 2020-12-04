@@ -6,11 +6,12 @@
         {% for message in form.income.errors %}
         <div style="color:rgb(255,0,0)"><strong>{{ message }}</strong></div>
         {% endfor %}
-
         {% for message in form.size.errors %}
         <div style="color:rgb(255,0,0)"><strong>{{ message }}</strong></div>
         {% endfor %}
-        <br>
+        {% for message in form.extra_expenses.errors %}
+        <div style="color:rgb(255,0,0)"><strong>{{ message }}</strong></div>
+        {% endfor %}
         <br>
 
         <form method=POST action="{{ url_for('ability_to_pay_views.ability_to_pay') }}">
@@ -23,6 +24,10 @@
                     <br>
                     {{ form.size.label }}
                     {{ form.size }}
+                    <br>
+                    <br>
+                    {{ form.extra_expenses.label }}
+                    {{ form.extra_expenses }}
                     <br>
                     <br>
                     {{ form.submit }}
