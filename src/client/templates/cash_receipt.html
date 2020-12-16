@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="main-header">
+        <h1>Fremont Cash Receipt</h1>
+        <br>
+        {% for message in form.file.errors %}
+        <div style="color:rgb(255,0,0)"><strong>{{ message }}</strong></div>
+        {% endfor %}
+        <br>
+
+        <form method=POST action="{{ url_for('cash_receipt_views.cash_receipt') }}">
+            <fieldset>
+                {{ form.hidden_tag() }}
+                <div>
+                    {{ form.file.label }}
+                    {{ form.file }}
+                    <br>
+                    <br>
+                    {{ form.upload }}
+                    <br>
+                    <br>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock content %}
