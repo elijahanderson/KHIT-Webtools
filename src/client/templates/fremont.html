@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="main-header">
+        <h1>Fremont Webtools</h1>
+        {% for title, link in tools.items() %}
+        <a class="btn" href="{{ link }}">{{ title }}</a>
+        {% endfor %}
+    </div>
+{% endblock content %}
