@@ -66,14 +66,14 @@ h1, h2, h3, h4, h5, h6 {
   color: #cbd5db;
 }
 
-.main-header .header-btn {
+.main-header .btn {
   color: #444444;
-  font-weight: bold;
   text-decoration: none;
 }
 
-.main-header .header-btn:hover {
+.main-header .btn:hover {
   color: #cbd5db;
+  font-weight: bold;
 }
 
 .main-header .dict-btn {
