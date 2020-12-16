@@ -6,4 +6,3 @@ from wtforms import SubmitField
 class CashReceiptForm(FlaskForm):
     file = FileField('Upload',
                      validators=[FileRequired(), FileAllowed(['csv', 'xlsx'], 'File must end in .csv or .xlsx')])
-    upload = SubmitField('Upload')

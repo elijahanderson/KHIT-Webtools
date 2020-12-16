@@ -14,5 +14,6 @@ def cash_receipt():
         if form.validate_on_submit():
             filename = secure_filename(form.file.data.filename)
             form.file.data.save('src/uploads/' + filename)
+            print('Upload success')
             return render_template('cash_receipt.html', title='Cash Receipt', form=form)
     return render_template('cash_receipt.html', title='Cash Receipt', form=form)
