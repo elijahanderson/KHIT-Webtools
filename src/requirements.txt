@@ -1,5 +1,6 @@
 flask
 flask_wtf
+pandas
 uWSGI
 werkzeug
 wtforms

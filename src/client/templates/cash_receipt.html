@@ -8,7 +8,7 @@
         {% endfor %}
         <br>
 
-        <form method=POST action="{{ url_for('cash_receipt_views.cash_receipt') }}">
+        <form method=POST enctype="multipart/form-data" action="{{ url_for('cash_receipt_views.cash_receipt') }}">
             <fieldset>
                 {{ form.hidden_tag() }}
                 <div>
@@ -16,6 +16,13 @@
 		    <br>
                     {{ form.file }}
                     <br>
+		    <br>
+		    <input type="submit">
+		    <br>
+		    <br>
+		    {% if dl_file %}
+		    <a href="{{ 'cash-receipt-download/%(dl_file)s' % {'dl_file': dl_file} }}">Download</a>
+		    {% endif %}
                 </div>
             </fieldset>
         </form>

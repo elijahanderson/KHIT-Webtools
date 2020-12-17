@@ -14,3 +14,4 @@ app.register_blueprint(ability_to_pay_blueprint)
 app.register_blueprint(cash_receipt_blueprint)
 app.register_blueprint(fremont_blueprint)
 app.secret_key = "secret key"
+
