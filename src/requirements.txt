@@ -4,3 +4,5 @@ pandas
 uWSGI
 werkzeug
 wtforms
+xlrd
+xlwt

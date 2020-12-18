@@ -7,6 +7,7 @@ WORKDIR /client
 ADD . /client
 
 # Install the dependencies
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # start uWSGI
