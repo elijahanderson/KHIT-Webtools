@@ -13,8 +13,10 @@ def modify_cash_receipt(file):
 
 
 def modify(df):
-    df = df[['payor_name', 'check_no', 'check_date', 'deposit_number']]
+    df = df[['check_date', 'check_no', 'deposit_number', 'payor_name', 'check_amount']]
     df['check_date'] = pd.to_datetime(df.check_date)
     df.sort_values(by=['check_date'], inplace=True)
+    df['check_date'] = df['check_date'].dt.strftime('%m/%d/%Y')
+    df['check_amount'] = df['check_amount'].apply(lambda amt: f'${amt:,.2f}')
     return df
 
