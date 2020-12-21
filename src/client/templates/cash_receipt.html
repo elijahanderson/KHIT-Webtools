@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="main-header">
+        <h1>Fremont Cash Receipt</h1>
+        <br>
+        {% for message in form.file.errors %}
+        <div style="color:rgb(255,0,0)"><strong>{{ message }}</strong></div>
+        {% endfor %}
+	{% if error_msg %}
+	<div style="color:rgb(255,0,0)"><strong>{{ error_msg }}</strong></div>
+	{% endif %}
+        <br>
+
+        <form method=POST enctype="multipart/form-data" action="{{ url_for('cash_receipt_views.cash_receipt') }}">
+            <fieldset>
+                {{ form.hidden_tag() }}
+                <div>
+                    {{ form.file.label }} {{ form.file }}
+                    <br>
+		    <br>
+		    {{ form.upload }}
+		    <br>
+		    <br>
+		    {% if dl_file %}
+		    <h4><a class="download-link" href="{{ 'cash-receipt-download/%(dl_file)s' % {'dl_file': dl_file} }}">Download</a></h4>
+		    {% endif %}
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock content %}
