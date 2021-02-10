@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="main-header">
+        <h1>ISL Automation</h1>
+        <br>
+        {% for message in form.from_date.errors %}
+        <div style="color:rgb(255,0,0)"><strong>{{ message }}</strong></div>
+        {% endfor %}
+        <br>
+
+        <form method=POST action="{{ url_for('isl_rpa_views.isl_rpa') }}">
+            <fieldset>
+                {{ form.hidden_tag() }}
+                <div>
+                    {{ form.from_date.label }} {{form.from_date(class='datepicker')}}
+                    <br>
+                    <br>
+                    {{ form.submit }}
+                    <br>
+                    <br>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock content %}
