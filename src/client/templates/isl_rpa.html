@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="main-header">
+    <div class="main-header" id="isl-content">
         <h1>ISL Automation</h1>
         <br>
         {% for message in form.from_date.errors %}
@@ -15,11 +15,27 @@
                     {{ form.from_date.label }} {{form.from_date(class='datepicker')}}
                     <br>
                     <br>
-                    {{ form.submit }}
+                    <input type="submit" value="Submit" onclick="showLoader(); hideSuccess();">
                     <br>
                     <br>
                 </div>
             </fieldset>
         </form>
+        <div id="loading-icon" style="display: none">
+            <p>Generating ISLs... (this should take a minute or two)</p>
+            <img src="static/ajax-loader.gif">
+        </div>
+        {% if success == True %}
+            <p id="success">Isl Automation ran successfully. The resulting PDFs have been placed in the Fremont Google Drive.</p>
+        {% endif %}
     </div>
+    <script language="JavaScript">
+        function showLoader() {
+            document.getElementById('loading-icon').style.display = "block";
+        }
+        function hideSuccess() {
+            document.getElementById('success').style.display = "none";
+        }
+    </script>
+
 {% endblock content %}

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, flash
 from traceback import print_exc
 
 from src.client.forms.isl_form import ISLForm
@@ -21,5 +21,8 @@ def isl_rpa():
                 print_exc()
                 email_body = 'System encountered an error running Fremont ISL RPA: %s' % e
                 send_gmail('eanderson@khitconsulting.com', 'KHIT Report Notification', email_body)
-            return render_template('isl_rpa.html', title='ISL Automation', form=form)
+                msg = 'System encountered an error running the ISL for this date. Please wait and try again, or if ' \
+                      'failure persists, contact eanderson@khitconsulting.com'
+                return render_template('error.html', title='ISL Error', header="ISL Error", msg=msg)
+            return render_template('isl_rpa.html', title='ISL Automation', form=form, success=True)
     return render_template('isl_rpa.html', title='ISL Automation', form=form)
