@@ -199,7 +199,7 @@ def create_isl(frame, staff, program_modifier, from_date, insurance_info):
         isl_pdf.y = 175
         isl_pdf.cell(w=200, h=10, txt='_______________________________________________________________________________'
                                       '_________________________________________')
-    isl_pdf.output('pdf/isl_%s_%s_%s_%s.pdf' %
+    isl_pdf.output('src/pdf/isl_%s_%s_%s_%s.pdf' %
                    (staff.split(', ')[0].lower(), staff.split(', ')[1].lower(), from_date.strftime('%Y-%m-%d'),
                     num_to_modifier(program_modifier)))
 
@@ -209,12 +209,12 @@ def isl(from_date):
     pd.set_option('display.max_columns', None)
     pd.set_option('display.width', None)
 
-    staff_only = pd.read_csv('csv/only_staff.csv')
-    staff_ids = pd.read_csv('csv/staff_ids.csv')
-    clients_only = pd.read_csv('csv/clients_only.csv')
-    recipient_codes = pd.read_csv('csv/recipient_codes.csv')
-    other_codes = pd.read_csv('csv/other_codes.csv')
-    insyst_ids = pd.read_csv('csv/client_insyst_ids.csv')
+    staff_only = pd.read_csv('src/csv/only_staff.csv')
+    staff_ids = pd.read_csv('src/csv/staff_ids.csv')
+    clients_only = pd.read_csv('src/csv/clients_only.csv')
+    recipient_codes = pd.read_csv('src/csv/recipient_codes.csv')
+    other_codes = pd.read_csv('src/csv/other_codes.csv')
+    insyst_ids = pd.read_csv('src/csv/client_insyst_ids.csv')
 
     staff_only = staff_only[['staff_name', 'event_name', 'actual_date', 'duration', 'event_log_id', 'staff_id']]
     staff_only['actual_date'] = pd.to_datetime(staff_only.actual_date)
@@ -248,7 +248,7 @@ def isl(from_date):
     merged['program_modifier_code'] = merged['program_modifier_code'].fillna('maa')
     merged['program_modifier_code'] = merged['program_modifier_code'].apply(lambda v: modifier_to_num(v))
 
-    insurance_info = pd.read_csv('csv/insurance_info.csv')
+    insurance_info = pd.read_csv('src/csv/insurance_info.csv')
     insurance_info.drop_duplicates(inplace=True)
     insurance_info = insurance_info.rename(columns={'Client ID': 'id_no'})
     insurance_info['id_no'] = insurance_info['id_no'].astype(int)
@@ -338,7 +338,7 @@ def browser(from_date, to_date):
     options.add_argument("--disable-setuid-sandbox")
     options.add_argument('--verbose')
     options.add_experimental_option('prefs', {
-        'download.default_directory': 'D:\\Programming\\KHIT\\KHIT-Webtools\\src\\csv',
+        'download.default_directory': 'src/csv',
         'download.prompt_for_download': False,
         'download.directory_upgrade': True,
         'safebrowsing_for_trusted_sources_enabled': False,
@@ -347,17 +347,17 @@ def browser(from_date, to_date):
     options.add_argument('--disable-gpu')
     options.add_argument('--disable-software-rasterizer')
     options.add_argument('--headless')
-    driver = webdriver.Chrome(executable_path='C:\\Users\\mingus\\AppData\\Local\\chromedriver.exe',
+    driver = webdriver.Chrome(executable_path='/usr/bin/chromedriver',
                               chrome_options=options)
     driver.command_executor._commands['send_command'] = ('POST', '/session/$sessionId/chromium/send_command')
-    params = {'cmd': 'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': 'D:\\Programming\\KHIT\\KHIT-Webtools\\src\\csv'}}
+    params = {'cmd': 'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': 'src/csv'}}
     driver.execute('send_command', params)
     print('Done.')
 
     driver.get('https://myevolvcofhsxb.netsmartcloud.com/')
 
     # login
-    with open('config/login.yml', 'r') as yml:
+    with open('src/config/login.yml', 'r') as yml:
         login = yaml.safe_load(yml)
         usr = login['fremont']
         pwd = login['pwd']
@@ -400,7 +400,7 @@ def browser(from_date, to_date):
     driver.find_element_by_xpath('/html/body/form/div[3]/div[2]/ul/li[17]/a').click()
     sleep(3)
     filename = max(['csv' + '/' + f for f in os.listdir('csv')], key=os.path.getctime)
-    shutil.move(filename, 'csv/only_staff.csv')
+    shutil.move(filename, 'src/csv/only_staff.csv')
 
     # navigate to and generate canned client services report (clients_only.csv)
     driver.switch_to.default_content()
@@ -439,7 +439,7 @@ def browser(from_date, to_date):
     driver.find_element_by_xpath('//*[@id="form-toolbar-16"]').click()
     sleep(3)
     filename = max(['csv' + '/' + f for f in os.listdir('csv')], key=os.path.getctime)
-    shutil.move(filename, 'csv/clients_only.csv')
+    shutil.move(filename, 'src/csv/clients_only.csv')
 
     # navigate to custom reports > -RPA-
     driver.switch_to.default_content()
@@ -476,7 +476,7 @@ def browser(from_date, to_date):
     driver.find_element_by_id('CSV').click()
     sleep(3)
     filename = max(['csv' + '/' + f for f in os.listdir('csv')], key=os.path.getctime)
-    shutil.move(filename, 'csv/recipient_codes.csv')
+    shutil.move(filename, 'src/csv/recipient_codes.csv')
 
     driver.close()
     driver.switch_to.window(driver.window_handles[0])
@@ -500,7 +500,7 @@ def browser(from_date, to_date):
     driver.find_element_by_xpath('/html/body/form/span[5]/span/rdcondelement6/span/a/img').click()
     sleep(3)
     filename = max(['csv' + '/' + f for f in os.listdir('csv')], key=os.path.getctime)
-    shutil.move(filename, 'csv/staff_ids.csv')
+    shutil.move(filename, 'src/csv/staff_ids.csv')
 
     driver.close()
     driver.switch_to.window(driver.window_handles[0])
@@ -529,7 +529,7 @@ def browser(from_date, to_date):
     driver.implicitly_wait(5)
     sleep(3)
     filename = max(['csv' + '/' + f for f in os.listdir('csv')], key=os.path.getctime)
-    shutil.move(filename, 'csv/other_codes.csv')
+    shutil.move(filename, 'src/csv/other_codes.csv')
 
     driver.close()
     driver.switch_to.window(driver.window_handles[0])
@@ -553,7 +553,7 @@ def browser(from_date, to_date):
     driver.find_element_by_id('CSV').click()
     sleep(3)
     filename = max(['csv' + '/' + f for f in os.listdir('csv')], key=os.path.getctime)
-    shutil.move(filename, 'csv/client_insyst_ids.csv')
+    shutil.move(filename, 'src/csv/client_insyst_ids.csv')
 
     driver.close()
     driver.switch_to.window(driver.window_handles[0])
@@ -577,7 +577,7 @@ def browser(from_date, to_date):
     driver.find_element_by_id('CSV').click()
     sleep(3)
     filename = max(['csv' + '/' + f for f in os.listdir('csv')], key=os.path.getctime)
-    shutil.move(filename, 'csv/insurance_info.csv')
+    shutil.move(filename, 'src/csv/insurance_info.csv')
 
     print('Exiting chromedriver...', end=' ')
     driver.close()
@@ -594,12 +594,12 @@ def fremont_isl(from_date):
     folder_path = '%s' % from_date.strftime('%Y-%m-%d')
     os.mkdir(folder_path)
     for filename in os.listdir('pdf'):
-        shutil.move('pdf/%s' % filename, folder_path)
+        shutil.move('src/pdf/%s' % filename, folder_path)
     upload_folder(folder_path, '1lYsW4yfourbnFYJB3GLh6br7D1_3LOcd')
 
     for filename in os.listdir('csv'):
         if not filename.endswith('.xlsx'):
-            os.remove('csv/%s' % filename)
+            os.remove('src/csv/%s' % filename)
     for filename in os.listdir('pdf'):
-        os.remove('pdf/%s' % filename)
+        os.remove('src/pdf/%s' % filename)
     shutil.rmtree(folder_path)
