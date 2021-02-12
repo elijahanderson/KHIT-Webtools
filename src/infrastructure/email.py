@@ -1,6 +1,5 @@
 import base64
 
-from apiclient import errors
 from email.mime.text import MIMEText
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -35,19 +34,16 @@ def send_message(service, user_id, message):
         Returns:
             Sent Message.
     """
-    try:
-        message['raw'] = message['raw'].decode()
-        message = (service.users().messages().send(userId=user_id, body=message).execute())
-        print('Message Id: %s' % message['id'])
-        return message
-    except errors.HttpError as error:
-        print('An error occurred: %s' % error)
-
+    message['raw'] = message['raw'].decode()
+    message = (service.users().messages().send(userId=user_id, body=message).execute())
+    print('Message Id: %s' % message['id'])
+    return message
+    
 
 def service_act_login():
     """ Log into gmail service account. """
     SCOPES = ['https://www.googleapis.com/auth/gmail.send']
-    SERVICE_ACCOUNT_FILE = '../config/service_key.json'
+    SERVICE_ACCOUNT_FILE = 'config/service_key.json'
 
     credentials = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)

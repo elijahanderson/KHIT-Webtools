@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, request, flash
 from traceback import print_exc
 
-from src.client.forms.isl_form import ISLForm
-from src.infrastructure.email import send_gmail
-from src.infrastructure.isl_rpa import fremont_isl
+from client.forms.isl_form import ISLForm
+from infrastructure.email import send_gmail
+from infrastructure.isl_rpa import fremont_isl
 
 
 isl_rpa_blueprint = Blueprint('isl_rpa_views', __name__, template_folder='templates')

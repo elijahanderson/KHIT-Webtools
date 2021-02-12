@@ -9,7 +9,7 @@ from fpdf import FPDF
 from selenium import webdriver
 from time import sleep
 
-from src.infrastructure.drive_upload import upload_folder
+from infrastructure.drive_upload import upload_folder
 
 
 def create_isl(frame, staff, program_modifier, from_date, insurance_info):
@@ -347,7 +347,7 @@ def browser(from_date, to_date):
     options.add_argument('--disable-gpu')
     options.add_argument('--disable-software-rasterizer')
     options.add_argument('--headless')
-    driver = webdriver.Chrome(executable_path='/usr/bin/chromedriver',
+    driver = webdriver.Chrome(executable_path='/usr/bin/chromedriver/chromedriver',
                               chrome_options=options)
     driver.command_executor._commands['send_command'] = ('POST', '/session/$sessionId/chromium/send_command')
     params = {'cmd': 'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': 'src/csv'}}
