@@ -11,6 +11,7 @@ pandas
 pyyaml
 selenium
 uWSGI
+webdriver_manager
 werkzeug
 wtforms
 xlrd
