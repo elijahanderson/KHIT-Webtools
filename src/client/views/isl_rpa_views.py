@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template, request, flash
+import threading
+
+from flask import Blueprint, redirect, render_template, request
 from traceback import print_exc
 
 from client.forms.isl_form import ISLForm
@@ -11,18 +13,20 @@ isl_rpa_blueprint = Blueprint('isl_rpa_views', __name__, template_folder='templa
 
 @isl_rpa_blueprint.route('/isl-rpa', methods=['GET', 'POST'])
 def isl_rpa():
-    form = ISLForm()
+    def generate_rpa(**kwargs):
+        try:
+            from_date = kwargs.get('query', {})
+            fremont_isl(query)
+        except Exception as e:
+            print('System encountered an error running Fremont ISL RPA:\n')
+            print_exc()
+            email_body = 'System encountered an error running Fremont ISL RPA: %s' % e
+            send_gmail('eanderson@khitconsulting.com', 'KHIT Report Notification', email_body)
+                                
     if request.method == 'POST':
-        if form.validate_on_submit():
-            try:
-                fremont_isl(form.from_date.data)
-            except Exception as e:
-                print('System encountered an error running Fremont ISL RPA:\n')
-                print_exc()
-                email_body = 'System encountered an error running Fremont ISL RPA: %s' % e
-                send_gmail('eanderson@khitconsulting.com', 'KHIT Report Notification', email_body)
-                msg = 'System encountered an error running the ISL for this date. Please wait and try again, or if ' \
-                      'failure persists, contact eanderson@khitconsulting.com'
-                return render_template('error.html', title='ISL Error', header="ISL Error", msg=msg)
-            return render_template('isl_rpa.html', title='ISL Automation', form=form, success=True)
-    return render_template('isl_rpa.html', title='ISL Automation', form=form)
+        query = request.form['from-date']
+        thread = threading.Thread(target=generate_rpa, kwargs={'query': query})
+        thread.start()
+        return render_template('isl_rpa.html', title='ISL Automation', loading=True, from_date=query)
+    return render_template('isl_rpa.html', title='ISL Automation')
+

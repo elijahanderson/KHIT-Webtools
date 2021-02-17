@@ -1,41 +1,49 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="main-header" id="isl-content">
-        <h1>ISL Automation</h1>
-        <br>
-        {% for message in form.from_date.errors %}
-        <div style="color:rgb(255,0,0)"><strong>{{ message }}</strong></div>
-        {% endfor %}
-        <br>
-
-        <form method=POST action="{{ url_for('isl_rpa_views.isl_rpa') }}">
-            <fieldset>
-                {{ form.hidden_tag() }}
-                <div>
-                    {{ form.from_date.label }} {{form.from_date(class='datepicker')}}
-                    <br>
-                    <br>
-                    <input type="submit" value="Submit" onclick="showLoader(); hideSuccess();">
-                    <br>
-                    <br>
-                </div>
-            </fieldset>
-        </form>
-        <div id="loading-icon" style="display: none">
+    {% if loading %}
+        <div id="loading-icon" style="display: block" onload="waitTwoMins();">
             <p>Generating ISLs... (this should take a minute or two)</p>
             <img src="static/loader.gif">
         </div>
-        {% if success == True %}
-            <p id="success">Isl Automation ran successfully. The resulting PDFs have been placed in the Fremont Google Drive.</p>
-        {% endif %}
-    </div>
+        <div class="main-header" id="success" style="display: none">
+	    <p>The ISL for {{ from_date }} has been successfully generated! Check it out at 
+	    <a class="btn" href="https://drive.google.com/drive/folders/1lYsW4yfourbnFYJB3GLh6br7D1_3LOcd">the shared drive.</a></p>
+	</div>
+	<script language="JavaScript">
+            function waitTwoMins() {
+                setTimeout(showSuccess, 100000);
+            }
+            function showSuccess() {
+                document.getElementById('loading-icon').style.display = "none";
+                document.getElementById('success').style.display = "block";
+            }
+	    window.onload = waitTwoMins;
+    	</script>
+    {% else %}
+    	<div class="main-header" id="isl-content">
+            <h1>ISL Automation</h1>
+            <br>
+            <form method=POST action="{{ url_for('isl_rpa_views.isl_rpa') }}">
+            	<div>
+		    <label for="from-date">Select date:</label>
+		    <input type="date" id="from-date" name="from-date">
+                    <br>
+                    <br>
+                    <input type="submit" value="Submit">
+                    <br>
+                    <br>
+            	</div>
+            </form>
+    	</div>
+
+    {% endif %}
     <script language="JavaScript">
-        function showLoader() {
-            document.getElementById('loading-icon').style.display = "block";
+        function waitTwoMins() {
+            setTimeout(showSuccess, 120000);
         }
-        function hideSuccess() {
-            document.getElementById('success').style.display = "none";
+        function showSuccess() {
+            document.getElementById('loading-icon').style.display = "none";
+            document.getElementById('success').style.display = "block";
         }
     </script>
-
 {% endblock content %}

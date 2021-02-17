@@ -592,6 +592,7 @@ def browser(from_date, to_date):
 
 
 def fremont_isl(from_date):
+    from_date = pd.to_datetime(from_date)
     print('Running ISL report for ' + from_date.strftime('%Y.%m.%d'))
     to_date = from_date + timedelta(days=1)
     
