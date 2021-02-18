@@ -8,7 +8,6 @@ from datetime import date, datetime, timedelta
 from fpdf import FPDF
 from selenium import webdriver
 from time import sleep
-from webdriver_manager.chrome import ChromeDriverManager
 
 from infrastructure.drive_upload import upload_folder
 
