@@ -3,7 +3,6 @@ import threading
 from flask import Blueprint, redirect, render_template, request
 from traceback import print_exc
 
-from client.forms.isl_form import ISLForm
 from infrastructure.email import send_gmail
 from infrastructure.isl_rpa import fremont_isl
 
