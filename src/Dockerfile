@@ -13,7 +13,8 @@ RUN apt update
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN apt install -y fonts-liberation
 RUN apt install -y ./google-chrome-stable_current_amd64.deb
-
+RUN unzip chromedriver_linux64.zip
+RUN mv chromedriver /usr/bin/chromedriver 
 
 # start uWSGI
 CMD ["uwsgi", "app.ini"]
