@@ -83,7 +83,7 @@ def create_isl(frame, staff, program_modifier, from_date, insurance_info):
                 isl_pdf.cell(w=30, h=12, txt=row_insurance['Medicare'], border=1)
             else:
                 isl_pdf.cell(w=30, h=12, txt='', border=1)
-            isl_pdf.cell(w=30, h=12, txt=str(int(row['id_no'])), border=1)
+            isl_pdf.cell(w=30, h=12, txt=str(int(row['id_number'])), border=1)
             isl_pdf.cell(w=40, h=12, txt=row['full_name'], border=1)
             isl_pdf.cell(w=40, h=12, txt=row['event_name'], border=1)
             isl_pdf.cell(w=20, h=12, txt=row['actual_date'].strftime('%m/%d/%y'), border=1)
