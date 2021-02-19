@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, send_file
+from os import remove
 from werkzeug.utils import secure_filename
 from xlrd import XLRDError
 
@@ -17,12 +18,14 @@ def dpn():
             filename = secure_filename(form.file.data.filename)
             form.file.data.save(filename)
             try:
-                modify_dpn(filename)
-                return render_template('dpn.html', title='Cash Receipt', form=form, dl_file=filename)
+                output = modify_dpn(filename)
+                remove('dpn.csv')
+                print(output)
+                return render_template('dpn.html', title='Cash Receipt', form=form, output=output)
             except KeyError as e:
                 error_msg = 'The CSV file you selected does not contain the expected columns. ' \
                             'Please ensure you selected' \
-                            ' the correct file and that it is a cash receipt report. ' \
+                            ' the correct file and that it is a DPN report. ' \
                             'If this error persists, contact Eli at eanderson@khitconsulting.com'
                 return render_template('dpn.html', title='Cash Receipt', form=form, error_msg=error_msg)
             except XLRDError as e:
