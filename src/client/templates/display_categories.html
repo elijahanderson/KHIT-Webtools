@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="main-header">
+        <h1>Fremont DPN</h1>
+        <br>
+        {% for message in form.file.errors %}
+        <div style="color:rgb(255,0,0)"><strong>{{ message }}</strong></div>
+        {% endfor %}
+	    {% if error_msg %}
+	    <div style="color:rgb(255,0,0)"><strong>{{ error_msg }}</strong></div>
+	    {% endif %}
+        <br>
+
+        <form method=POST enctype="multipart/form-data" action="{{ url_for('dpn_views.dpn') }}">
+            <fieldset>
+                {{ form.hidden_tag() }}
+                <div>
+                    {{ form.file.label }} {{ form.file }}
+                    <br>
+		            <br>
+		            {{ form.upload }}
+		            <br>
+		            <br>
+                </div>
+            </fieldset>
+        </form>
+        <br>
+        <a href="{{ '/dpn/%(page_no)s' % {'page_no': page_no-1} }}">Prev Page</a>
+        <a href="{{ '/dpn/%(page_no)s' % {'page_no': page_no+1} }}">Next Page</a>
+        {% for client, client_data in output.items() %}
+            {% if client_data.keys()|length > 1 %}
+            <h3>{{ client }} - {{ client_data['id_no'] }}</h3>
+            <table id="client-event-categories" onload="genTables();">
+                <colgroup>
+                    <col span="1" style="width: 20%">
+                    <col span="1" style="width: 20%">
+                    <col span="1" style="width: 20%">
+                    <col span="1" style="width: 20%">
+                    <col span="1" style="width: 20%">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        {% if 'family' in client_data.keys() %}
+                        <th># Family Sessions</th>
+                        {% endif %}
+                        {% if 'individual' in client_data.keys() %}
+                        <th># Individual Sessions</th>
+                        {% endif %}
+                        {% if 'case management' in client_data.keys() %}
+                        <th># Case Management Services</th>
+                        {% endif %}
+                        {% if 'brief client communications' in client_data.keys() %}
+                        <th># Brief Client Communications</th>
+                        {% endif %}
+                        {% if 'collateral and advocacy' in client_data.keys() %}
+                        <th># Collateral & Advocacy Contacts</th>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        {% if 'family' in client_data.keys() %}
+                        <td>{{ client_data['family'] }}</td>
+                        {% endif %}
+                        {% if 'individual' in client_data.keys() %}
+                        <td>{{ client_data['individual'] }}</td>
+                        {% endif %}
+                        {% if 'case management' in client_data.keys() %}
+                        <td>{{ client_data['case management'] }}</td>
+                        {% endif %}
+                        {% if 'brief client communications' in client_data.keys() %}
+                        <td>{{ client_data['brief client communications'] }}</td>
+                        {% endif %}
+                        {% if 'collateral and advocacy' in client_data.keys() %}
+                        <td>{{ client_data['collateral and advocacy'] }}</td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <br>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock content %}
