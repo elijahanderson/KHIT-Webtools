@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, send_file
+from flask import Blueprint, redirect, render_template, request,  url_for
+import json
 from os import remove
 from werkzeug.utils import secure_filename
 from xlrd import XLRDError
@@ -19,9 +20,11 @@ def dpn():
             form.file.data.save(filename)
             try:
                 output = modify_dpn(filename)
-                remove('dpn.csv')
                 print(output)
-                return render_template('dpn.html', title='Cash Receipt', form=form, output=output)
+                remove('dpn.csv')
+                with open('json/output.json', 'w') as outfile:
+                    json.dump(output, outfile)
+                return redirect(url_for('dpn_views.display_categories', page_no=1))
             except KeyError as e:
                 error_msg = 'The CSV file you selected does not contain the expected columns. ' \
                             'Please ensure you selected' \
@@ -39,3 +42,29 @@ def dpn():
                             'eanderson@khitconsulting.com with this error message: ' + str(e)
                 return render_template('dpn.html', title='Cash Receipt', form=form, error_msg=error_msg)
     return render_template('dpn.html', title='Cash Receipt', form=form)
+
+
+@dpn_blueprint.route('/dpn/<page_no>', methods=['GET', 'POST'])
+def display_categories(page_no):
+    form = DPNForm()
+    page_no = int(page_no)
+    with open('json/output.json') as output_file:
+        output = json.load(output_file)
+    output_split = {}
+    pg = 1
+    pages = []
+    for i in range(0, len(output.items()), 27):
+        pages.append(pg)
+        for item in list(output.items())[i:i+27]:
+            if pg in output_split.keys():
+                output_split[pg].append(item)
+            else:
+                output_split[pg] = [item]
+        pg = pg + 1
+    try:
+        return render_template('display_categories.html', title='Cash Receipt', form=form, output=output_split[page_no],
+                               page_no=page_no, pages=pages)
+    except Exception as e:
+        error_msg = 'An unexpected error has occurred. If this error persists, contact Eli at ' \
+                    'eanderson@khitconsulting.com with this error message: ' + str(e)
+        return render_template('dpn.html', title='Cash Receipt', form=form, error_msg=error_msg)

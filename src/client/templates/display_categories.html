@@ -25,12 +25,31 @@
             </fieldset>
         </form>
         <br>
-        <a href="{{ '/dpn/%(page_no)s' % {'page_no': page_no-1} }}">Prev Page</a>
-        <a href="{{ '/dpn/%(page_no)s' % {'page_no': page_no+1} }}">Next Page</a>
-        {% for client, client_data in output.items() %}
+        <div class="pagination">
+            {% if page_no > 1 %}
+                <a href="{{ '/dpn/%(page_no)s' % {'page_no': page_no-1} }}">&laquo;</a>
+            {% else %}
+                <a>&laquo;</a>
+            {% endif %}
+            {% for pg in pages %}
+                {% if pg == page_no %}
+                    <a class="active" href="{{ '/dpn/%(page_no)s' % {'page_no': pg} }}">{{ pg }}</a>
+                {% else %}
+                    <a href="{{ '/dpn/%(page_no)s' % {'page_no': pg} }}">{{ pg }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if page_no < pages|length %}
+                <a href="{{ '/dpn/%(page_no)s' % {'page_no': page_no+1} }}">&raquo;</a>
+            {% else %}
+                <a>&raquo;</a>
+            {% endif %}
+        </div>
+        <br>
+        <br>
+        {% for client, client_data in output %}
             {% if client_data.keys()|length > 1 %}
             <h3>{{ client }} - {{ client_data['id_no'] }}</h3>
-            <table id="client-event-categories" onload="genTables();">
+            <table id="client-event-categories">
                 <colgroup>
                     <col span="1" style="width: 20%">
                     <col span="1" style="width: 20%">
@@ -79,5 +98,45 @@
             <br>
             {% endif %}
         {% endfor %}
+        <div class="pagination">
+            {% if page_no > 1 %}
+                <a href="{{ '/dpn/%(page_no)s' % {'page_no': page_no-1} }}">&laquo;</a>
+            {% else %}
+                <a>&laquo;</a>
+            {% endif %}
+            {% for pg in pages %}
+                {% if pg == page_no %}
+                    <a class="active" href="{{ '/dpn/%(page_no)s' % {'page_no': pg} }}">{{ pg }}</a>
+                {% else %}
+                    <a href="{{ '/dpn/%(page_no)s' % {'page_no': pg} }}">{{ pg }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if page_no < pages|length %}
+                <a href="{{ '/dpn/%(page_no)s' % {'page_no': page_no+1} }}">&raquo;</a>
+            {% else %}
+                <a>&raquo;</a>
+            {% endif %}
+        </div>
     </div>
+<style>
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  background-color: #2F88C4;
+  color: white;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+}
+</style>
 {% endblock content %}
