@@ -1,6 +1,7 @@
 venv/
 /.idea/
 __pycache__/
-config/
-pdf/
-csv/
+src/config/
+src/csv/
+src/pdf/
+src/json/

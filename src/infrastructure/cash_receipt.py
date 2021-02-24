@@ -18,4 +18,3 @@ def modify(df):
     df.sort_values(by=['check_date'], inplace=True)
     df['check_date'] = df['check_date'].dt.strftime('%m/%d/%Y')
     return df
-

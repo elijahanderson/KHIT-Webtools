@@ -7,7 +7,8 @@ fremont_blueprint = Blueprint('fremont_views', __name__, template_folder='templa
 def fremont():
     """ REST endpoint for the Fremont Webtools. """
     tools = {
-        'Cash Receipt Report Tool': '/cash-receipt',
-        'ISL Automation Tool': '/isl-rpa'
+        'Cash Receipt Report': '/cash-receipt',
+        'ISL Automation': '/isl-rpa',
+        'DPN Report': '/dpn'
     }
     return render_template('fremont.html', title='Fremont Webtools', tools=tools)
