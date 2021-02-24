@@ -21,7 +21,7 @@ def dpn():
             try:
                 output = modify_dpn(filename)
                 print(output)
-                remove('dpn.csv')
+                remove(filename)
                 with open('json/output.json', 'w') as outfile:
                     json.dump(output, outfile)
                 return redirect(url_for('dpn_views.display_categories', page_no=1))
