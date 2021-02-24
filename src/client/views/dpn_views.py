@@ -4,8 +4,8 @@ from os import remove
 from werkzeug.utils import secure_filename
 from xlrd import XLRDError
 
-from src.client.forms.dpn_form import DPNForm
-from src.infrastructure.dpn import modify_dpn
+from client.forms.dpn_form import DPNForm
+from infrastructure.dpn import modify_dpn
 
 dpn_blueprint = Blueprint('dpn_views', __name__, template_folder='templates')
 
