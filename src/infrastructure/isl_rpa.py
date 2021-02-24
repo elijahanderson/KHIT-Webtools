@@ -83,7 +83,7 @@ def create_isl(frame, staff, program_modifier, from_date, insurance_info):
                 isl_pdf.cell(w=30, h=12, txt=row_insurance['Medicare'], border=1)
             else:
                 isl_pdf.cell(w=30, h=12, txt='', border=1)
-            isl_pdf.cell(w=30, h=12, txt=str(int(row['id_no'])), border=1)
+            isl_pdf.cell(w=30, h=12, txt=str(int(row['id_number'])), border=1)
             isl_pdf.cell(w=40, h=12, txt=row['full_name'], border=1)
             isl_pdf.cell(w=40, h=12, txt=row['event_name'], border=1)
             isl_pdf.cell(w=20, h=12, txt=row['actual_date'].strftime('%m/%d/%y'), border=1)
@@ -347,7 +347,8 @@ def browser(from_date, to_date):
     options.add_argument('--disable-gpu')
     options.add_argument('--disable-software-rasterizer')
     options.add_argument('--headless')
-    driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(),
+    options.add_argument('--disable-dev-shm-usage')
+    driver = webdriver.Chrome(executable_path='/usr/bin/chromedriver',
                               chrome_options=options)
     driver.command_executor._commands['send_command'] = ('POST', '/session/$sessionId/chromium/send_command')
     params = {'cmd': 'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': 'csv'}}

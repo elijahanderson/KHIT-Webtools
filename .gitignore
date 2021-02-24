@@ -2,6 +2,6 @@ venv/
 /.idea/
 __pycache__/
 src/config/
-# src/csv/
+src/csv/
 src/pdf/
 src/json/
