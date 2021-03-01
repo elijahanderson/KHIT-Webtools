@@ -1,898 +1,898 @@
 def max_monthly_fee(income, size, extra_expenses):
     income = income - extra_expenses
-    if income < 1595.0:
+    if income < 1610:
         return 0
-    elif 1595 <= income < 1782:
+    elif 1610 <= income < 1799:
         if size == 1:
             return 40
         elif size > 1:
             return 0
-    elif 1782 <= income < 1968:
+    elif 1799 <= income < 1988:
         if size == 1:
-            return 47
+            return 48
         elif size > 1:
             return 0
-    elif 1968 <= income < 2155:
+    elif 1988 <= income < 2178:
         if size == 1:
             return 56
         elif size > 1:
             return 0
-    elif 2155 <= income < 2342:
+    elif 2178 <= income < 2367:
         if size == 1:
-            return 64
+            return 65
         elif size == 2:
             return 40
-    elif 2342 <= income < 2528:
+    elif 2367 <= income < 2556:
         if size == 1:
             return 74
         elif size == 2:
-            return 47
+            return 48
         elif size > 2:
             return 0
-    elif 2528 <= income < 2715:
+    elif 2556 <= income < 2745:
         if size == 1:
-            return 83
+            return 84
         elif size == 2:
             return 56
         elif size > 2:
             return 0
-    elif 2715 <= income < 2902:
+    elif 2745 <= income < 2934:
         if size == 1:
-            return 94
+            return 95
         elif size == 2:
-            return 64
+            return 65
         elif size == 3:
             return 40
         elif size > 3:
             return 0
-    elif 2902 <= income < 3088:
+    elif 2934 <= income < 3123:
         if size == 1:
-            return 105
+            return 106
         elif size == 2:
             return 74
         elif size == 3:
-            return 47
+            return 48
         elif size > 3:
             return 0
-    elif 3088 <= income < 3275:
+    elif 3123 <= income < 3313:
         if size == 1:
-            return 117
+            return 118
         elif size == 2:
-            return 83
+            return 84
         elif size == 3:
             return 56
         elif size > 3:
             return 0
-    elif 3275 <= income < 3462:
+    elif 3313 <= income < 3502:
         if size == 1:
-            return 129
+            return 131
         elif size == 2:
-            return 94
+            return 95
         elif size == 3:
-            return 64
+            return 65
         elif size == 4:
             return 40
         elif size > 4:
             return 0
-    elif 3462 <= income < 3648:
+    elif 3502 <= income < 3691:
         if size == 1:
-            return 142
+            return 144
         elif size == 2:
-            return 105
+            return 106
         elif size == 3:
             return 74
         elif size == 4:
-            return 47
+            return 48
         elif size > 4:
             return 0
-    elif 3648 <= income < 3835:
+    elif 3691 <= income < 3880:
         if size == 1:
-            return 155
+            return 157
         elif size == 2:
-            return 117
+            return 118
         elif size == 3:
-            return 83
+            return 84
         elif size == 4:
             return 56
         elif size > 4:
             return 0
-    elif 3835 <= income < 4022:
+    elif 3880 <= income < 4069:
         if size == 1:
-            return 170
+            return 171
         elif size == 2:
-            return 129
+            return 131
         elif size == 3:
-            return 94
+            return 95
         elif size == 4:
-            return 64
+            return 65
         elif size == 5:
             return 40
         elif size > 5:
             return 0
-    elif 4022 <= income < 4208:
+    elif 4069 <= income < 4258:
         if size == 1:
-            return 184
+            return 186
         elif size == 2:
-            return 142
+            return 144
         elif size == 3:
-            return 105
+            return 106
         elif size == 4:
             return 74
         elif size == 5:
-            return 47
+            return 48
         elif size > 5:
             return 0
-    elif 4208 <= income < 4395:
+    elif 4258 <= income < 4448:
         if size == 1:
-            return 199
+            return 202
         elif size == 2:
-            return 155
+            return 157
         elif size == 3:
-            return 117
+            return 118
         elif size == 4:
-            return 83
+            return 84
         elif size == 5:
             return 56
         elif size > 5:
             return 0
-    elif 4395 <= income < 4582:
+    elif 4448 <= income < 4637:
         if size == 1:
-            return 215
+            return 218
         elif size == 2:
-            return 170
+            return 171
         elif size == 3:
-            return 129
+            return 131
         elif size == 4:
-            return 94
+            return 95
         elif size == 5:
-            return 64
+            return 65
         elif size == 6:
             return 40
         elif size > 6:
             return 0
-    elif 4582 <= income < 4768:
+    elif 4637 <= income < 4826:
         if size == 1:
-            return 232
+            return 235
         elif size == 2:
-            return 184
+            return 186
         elif size == 3:
-            return 142
+            return 144
         elif size == 4:
-            return 105
+            return 106
         elif size == 5:
             return 74
         elif size == 6:
-            return 47
+            return 48
         elif size > 6:
             return 0
-    elif 4768 <= income < 4955:
+    elif 4826 <= income < 5015:
         if size == 1:
-            return 249
+            return 252
         elif size == 2:
-            return 199
+            return 202
         elif size == 3:
-            return 155
+            return 157
         elif size == 4:
-            return 117
+            return 118
         elif size == 5:
-            return 83
+            return 84
         elif size == 6:
             return 56
         elif size > 6:
             return 0
-    elif 4955 <= income < 5142:
+    elif 5015 <= income < 5204:
         if size == 1:
-            return 267
+            return 270
         elif size == 2:
-            return 215
+            return 218
         elif size == 3:
-            return 170
+            return 171
         elif size == 4:
-            return 129
+            return 131
         elif size == 5:
-            return 94
+            return 95
         elif size == 6:
-            return 64
+            return 65
         elif size == 7:
             return 40
         elif size > 7:
             return 0
-    elif 5142 <= income < 5328:
+    elif 5204 <= income < 5393:
         if size == 1:
-            return 285
+            return 288
         elif size == 2:
-            return 232
+            return 235
         elif size == 3:
-            return 184
+            return 186
         elif size == 4:
-            return 142
+            return 144
         elif size == 5:
-            return 105
+            return 106
         elif size == 6:
             return 74
         elif size == 7:
-            return 47
+            return 48
         elif size > 7:
             return 0
-    elif 5328 <= income < 5515:
+    elif 5393 <= income < 5583:
         if size == 1:
-            return 304
+            return 307
         elif size == 2:
-            return 249
+            return 252
         elif size == 3:
-            return 199
+            return 202
         elif size == 4:
-            return 155
+            return 157
         elif size == 5:
-            return 117
+            return 118
         elif size == 6:
-            return 83
+            return 84
         elif size == 7:
             return 56
         elif size > 7:
             return 0
-    elif 5515 <= income < 5702:
+    elif 5583 <= income < 5772:
         if size == 1:
-            return 323
+            return 327
         elif size == 2:
-            return 267
+            return 270
         elif size == 3:
-            return 215
+            return 218
         elif size == 4:
-            return 170
+            return 171
         elif size == 5:
-            return 129
+            return 131
         elif size == 6:
-            return 94
+            return 95
         elif size == 7:
-            return 64
+            return 65
         elif size == 8:
             return 40
         elif size > 8:
             return 0
-    elif 5702 <= income < 5888:
+    elif 5772 <= income < 5961:
         if size == 1:
-            return 343
+            return 347
         elif size == 2:
-            return 285
+            return 288
         elif size == 3:
-            return 232
+            return 235
         elif size == 4:
-            return 184
+            return 186
         elif size == 5:
-            return 142
+            return 144
         elif size == 6:
-            return 105
+            return 106
         elif size == 7:
             return 74
         elif size == 8:
-            return 47
+            return 48
         elif size > 8:
             return 0
-    elif 5888 <= income < 6075:
+    elif 5961 <= income < 6150:
         if size == 1:
-            return 364
+            return 368
         elif size == 2:
-            return 304
+            return 307
         elif size == 3:
-            return 249
+            return 252
         elif size == 4:
-            return 199
+            return 202
         elif size == 5:
-            return 155
+            return 157
         elif size == 6:
-            return 117
+            return 118
         elif size == 7:
-            return 83
+            return 84
         elif size == 8:
             return 56
         elif size > 8:
             return 0
-    elif 6075 <= income < 6262:
+    elif 6150 <= income < 6339:
         if size == 1:
-            return 385
+            return 390
         elif size == 2:
-            return 323
+            return 327
         elif size == 3:
-            return 267
+            return 270
         elif size == 4:
-            return 215
+            return 218
         elif size == 5:
-            return 170
+            return 171
         elif size == 6:
-            return 129
+            return 131
         elif size == 7:
-            return 94
+            return 95
         elif size == 8:
-            return 64
+            return 65
         elif size >= 9:
             return 40
-    elif 6262 <= income < 6448:
+    elif 6339 <= income < 6528:
         if size == 1:
-            return 407
+            return 412
         elif size == 2:
-            return 343
+            return 347
         elif size == 3:
-            return 285
+            return 288
         elif size == 4:
-            return 232
+            return 235
         elif size == 5:
-            return 184
+            return 186
         elif size == 6:
-            return 142
+            return 144
         elif size == 7:
-            return 105
+            return 106
         elif size == 8:
             return 74
         elif size >= 9:
-            return 47
-    elif 6448 <= income < 6635:
+            return 48
+    elif 6528 <= income < 6718:
         if size == 1:
-            return 429
+            return 435
         elif size == 2:
-            return 364
+            return 368
         elif size == 3:
-            return 304
+            return 307
         elif size == 4:
-            return 249
+            return 252
         elif size == 5:
-            return 199
+            return 202
         elif size == 6:
-            return 155
+            return 157
         elif size == 7:
-            return 117
+            return 118
         elif size == 8:
-            return 83
+            return 84
         elif size >= 9:
             return 56
-    elif 6635 <= income < 6822:
+    elif 6718 <= income < 6907:
         if size == 1:
-            return 453
+            return 458
         elif size == 2:
-            return 385
+            return 390
         elif size == 3:
-            return 323
+            return 327
         elif size == 4:
-            return 267
+            return 270
         elif size == 5:
-            return 215
+            return 218
         elif size == 6:
-            return 170
+            return 171
         elif size == 7:
-            return 129
+            return 131
         elif size == 8:
-            return 94
+            return 95
         elif size >= 9:
-            return 64
-    elif 6822 <= income < 7008:
+            return 65
+    elif 6907 <= income < 7096:
         if size == 1:
-            return 476
+            return 482
         elif size == 2:
-            return 407
+            return 412
         elif size == 3:
-            return 343
+            return 347
         elif size == 4:
-            return 385
+            return 288
         elif size == 5:
-            return 232
+            return 235
         elif size == 6:
-            return 184
+            return 186
         elif size == 7:
-            return 142
+            return 144
         elif size == 8:
-            return 105
+            return 106
         elif size >= 9:
             return 74
-    elif 7008 <= income < 7195:
+    elif 7096 <= income < 7285:
         if size == 1:
-            return 500
+            return 507
         elif size == 2:
-            return 429
+            return 435
         elif size == 3:
-            return 364
+            return 368
         elif size == 4:
-            return 304
+            return 307
         elif size == 5:
-            return 249
+            return 252
         elif size == 6:
-            return 199
+            return 202
         elif size == 7:
-            return 155
+            return 157
         elif size == 8:
+            return 118
+        elif size >= 9:
+            return 84
+    elif 7285 <= income < 7474:
+        if size == 1:
+            return 532
+        elif size == 2:
+            return 458
+        elif size == 3:
+            return 390
+        elif size == 4:
+            return 327
+        elif size == 5:
+            return 270
+        elif size == 6:
+            return 218
+        elif size == 7:
+            return 171
+        elif size == 8:
+            return 131
+        elif size >= 9:
+            return 95
+    elif 7474 <= income < 7663:
+        if size == 1:
+            return 558
+        elif size == 2:
+            return 482
+        elif size == 3:
+            return 412
+        elif size == 4:
+            return 347
+        elif size == 5:
+            return 288
+        elif size == 6:
+            return 235
+        elif size == 7:
+            return 186
+        elif size == 8:
+            return 144
+        elif size >= 9:
+            return 106
+    elif 7663 <= income < 7853:
+        if size == 1:
+            return 584
+        elif size == 2:
+            return 507
+        elif size == 3:
+            return 435
+        elif size == 4:
+            return 368
+        elif size == 5:
+            return 307
+        elif size == 6:
+            return 252
+        elif size == 7:
+            return 202
+        elif size == 8:
+            return 157
+        elif size >= 9:
             return 117
-        elif size >= 9:
-            return 83
-    elif 7195 <= income < 7382:
+    elif 7853 <= income < 8042:
         if size == 1:
-            return 525
+            return 611
         elif size == 2:
-            return 453
+            return 532
         elif size == 3:
-            return 385
+            return 458
         elif size == 4:
-            return 323
+            return 390
         elif size == 5:
-            return 267
+            return 327
         elif size == 6:
-            return 215
+            return 270
         elif size == 7:
-            return 170
+            return 218
         elif size == 8:
-            return 129
-        elif size >= 9:
-            return 94
-    elif 7382 <= income < 7568:
-        if size == 1:
-            return 551
-        elif size == 2:
-            return 476
-        elif size == 3:
-            return 407
-        elif size == 4:
-            return 343
-        elif size == 5:
-            return 285
-        elif size == 6:
-            return 232
-        elif size == 7:
-            return 184
-        elif size == 8:
-            return 142
-        elif size >= 9:
-            return 105
-    elif 7568 <= income < 7755:
-        if size == 1:
-            return 577
-        elif size == 2:
-            return 500
-        elif size == 3:
-            return 429
-        elif size == 4:
-            return 364
-        elif size == 5:
-            return 304
-        elif size == 6:
-            return 249
-        elif size == 7:
-            return 199
-        elif size == 8:
-            return 155
-        elif size >= 9:
-            return 117
-    elif 7755 <= income < 7942:
-        if size == 1:
-            return 603
-        elif size == 2:
-            return 525
-        elif size == 3:
-            return 453
-        elif size == 4:
-            return 385
-        elif size == 5:
-            return 323
-        elif size == 6:
-            return 267
-        elif size == 7:
-            return 215
-        elif size == 8:
-            return 170
+            return 171
         elif size >= 9:
             return 129
-    elif 7942 <= income < 8128:
+    elif 8042 <= income < 8231:
         if size == 1:
-            return 631
+            return 639
         elif size == 2:
-            return 551
+            return 558
         elif size == 3:
-            return 476
+            return 482
         elif size == 4:
-            return 407
+            return 412
         elif size == 5:
-            return 343
+            return 347
         elif size == 6:
-            return 285
+            return 288
         elif size == 7:
-            return 232
+            return 235
         elif size == 8:
-            return 184
+            return 186
         elif size >= 9:
             return 142
-    elif 8128 <= income < 8315:
+    elif 8231 <= income < 8420:
         if size == 1:
-            return 658
+            return 667
         elif size == 2:
-            return 577
+            return 584
         elif size == 3:
-            return 500
+            return 507
         elif size == 4:
-            return 429
+            return 435
         elif size == 5:
-            return 364
+            return 368
         elif size == 6:
-            return 304
+            return 307
         elif size == 7:
-            return 249
+            return 252
         elif size == 8:
-            return 199
+            return 202
         elif size >= 9:
-            return 155
-    elif 8315 <= income < 8502:
+            return 157
+    elif 8420 <= income < 8609:
         if size == 1:
-            return 687
+            return 695
         elif size == 2:
-            return 603
+            return 611
         elif size == 3:
-            return 525
+            return 532
         elif size == 4:
-            return 453
+            return 458
         elif size == 5:
-            return 385
+            return 390
         elif size == 6:
-            return 323
+            return 327
         elif size == 7:
-            return 267
+            return 270
         elif size == 8:
-            return 215
+            return 218
         elif size >= 9:
-            return 170
-    elif 8502 <= income < 8688:
+            return 171
+    elif 8609 <= income < 8798:
         if size == 1:
-            return 716
+            return 725
         elif size == 2:
-            return 631
+            return 639
         elif size == 3:
-            return 551
+            return 558
         elif size == 4:
-            return 476
+            return 482
         elif size == 5:
-            return 407
+            return 412
         elif size == 6:
-            return 343
+            return 347
         elif size == 7:
-            return 285
+            return 288
         elif size == 8:
-            return 232
+            return 235
         elif size >= 9:
-            return 184
-    elif 8688 <= income < 8875:
+            return 186
+    elif 8798 <= income < 8988:
         if size == 1:
-            return 745
+            return 755
         elif size == 2:
-            return 658
+            return 667
         elif size == 3:
-            return 577
+            return 584
         elif size == 4:
-            return 500
+            return 507
         elif size == 5:
-            return 429
+            return 435
         elif size == 6:
-            return 364
+            return 368
         elif size == 7:
-            return 304
+            return 307
         elif size == 8:
-            return 249
+            return 252
         elif size >= 9:
-            return 199
-    elif 8875 <= income < 9062:
+            return 202
+    elif 8988 <= income < 9177:
         if size == 1:
-            return 776
+            return 786
         elif size == 2:
-            return 687
+            return 695
         elif size == 3:
-            return 603
+            return 611
         elif size == 4:
-            return 525
+            return 532
         elif size == 5:
-            return 453
+            return 458
         elif size == 6:
-            return 385
+            return 390
         elif size == 7:
-            return 323
+            return 327
         elif size == 8:
-            return 267
+            return 270
         elif size >= 9:
-            return 215
-    elif 9062 <= income < 9248:
+            return 218
+    elif 9177 <= income < 9366:
         if size == 1:
-            return 806
+            return 817
         elif size == 2:
-            return 716
+            return 725
         elif size == 3:
-            return 631
+            return 639
         elif size == 4:
-            return 551
+            return 558
         elif size == 5:
-            return 476
+            return 482
         elif size == 6:
-            return 407
+            return 412
         elif size == 7:
-            return 343
+            return 347
         elif size == 8:
-            return 285
+            return 288
         elif size >= 9:
-            return 232
-    elif 9248 <= income < 9435:
+            return 235
+    elif 9366 <= income < 9555:
         if size == 1:
-            return 838
+            return 849
         elif size == 2:
-            return 745
+            return 755
         elif size == 3:
-            return 658
+            return 667
         elif size == 4:
-            return 577
+            return 584
         elif size == 5:
-            return 500
+            return 507
         elif size == 6:
-            return 429
+            return 435
         elif size == 7:
-            return 364
+            return 368
         elif size == 8:
-            return 304
+            return 307
         elif size >= 9:
-            return 249
-    elif 9435 <= income < 9622:
+            return 252
+    elif 9555 <= income < 9744:
         if size == 1:
-            return 870
+            return 881
         elif size == 2:
-            return 776
+            return 786
         elif size == 3:
-            return 687
+            return 695
         elif size == 4:
-            return 603
+            return 611
         elif size == 5:
-            return 525
+            return 532
         elif size == 6:
-            return 453
+            return 458
         elif size == 7:
-            return 385
+            return 390
         elif size == 8:
-            return 323
+            return 327
         elif size >= 9:
-            return 267
-    elif 9622 <= income < 9808:
+            return 270
+    elif 9744 <= income < 9933:
         if size == 1:
-            return 903
+            return 914
         elif size == 2:
-            return 806
+            return 817
         elif size == 3:
-            return 716
+            return 725
         elif size == 4:
-            return 631
+            return 639
         elif size == 5:
-            return 551
+            return 558
         elif size == 6:
-            return 476
+            return 482
         elif size == 7:
-            return 407
+            return 412
         elif size == 8:
-            return 343
+            return 347
         elif size >= 9:
-            return 285
-    elif 9808 <= income < 9995:
+            return 288
+    elif 9933 <= income < 10123:
         if size == 1:
-            return 936
+            return 948
         elif size == 2:
-            return 838
+            return 849
         elif size == 3:
-            return 745
+            return 755
         elif size == 4:
-            return 658
+            return 667
         elif size == 5:
-            return 577
+            return 584
         elif size == 6:
-            return 500
+            return 507
         elif size == 7:
-            return 429
+            return 435
         elif size == 8:
-            return 364
+            return 368
         elif size >= 9:
-            return 304
-    elif 9995 <= income < 10182:
+            return 307
+    elif 10123 <= income < 10312:
         if size == 1:
-            return 970
+            return 982
         elif size == 2:
-            return 870
+            return 881
         elif size == 3:
-            return 776
+            return 786
         elif size == 4:
-            return 687
+            return 695
         elif size == 5:
-            return 603
+            return 611
         elif size == 6:
-            return 525
+            return 532
         elif size == 7:
-            return 453
+            return 458
         elif size == 8:
-            return 385
+            return 390
         elif size >= 9:
-            return 323
-    elif 10182 <= income < 10368:
+            return 327
+    elif 10312 <= income < 10501:
         if size == 1:
-            return 1004
+            return 1017
         elif size == 2:
-            return 903
+            return 914
         elif size == 3:
-            return 806
+            return 817
         elif size == 4:
-            return 716
+            return 725
         elif size == 5:
-            return 631
+            return 639
         elif size == 6:
-            return 551
+            return 558
         elif size == 7:
-            return 476
+            return 482
         elif size == 8:
-            return 407
+            return 412
         elif size >= 9:
-            return 343
-    elif 10368 <= income < 10555:
+            return 347
+    elif 10501 <= income < 10690:
         if size == 1:
-            return 1039
+            return 1052
         elif size == 2:
-            return 936
+            return 948
         elif size == 3:
-            return 838
+            return 849
         elif size == 4:
-            return 745
+            return 755
         elif size == 5:
-            return 658
+            return 667
         elif size == 6:
-            return 577
+            return 584
         elif size == 7:
-            return 500
+            return 507
         elif size == 8:
-            return 429
+            return 435
         elif size >= 9:
-            return 364
-    elif 10555 <= income < 10742:
+            return 368
+    elif 10690 <= income < 10879:
         if size == 1:
-            return 1074
+            return 1088
         elif size == 2:
-            return 970
+            return 982
         elif size == 3:
-            return 870
+            return 881
         elif size == 4:
-            return 776
+            return 786
         elif size == 5:
-            return 687
+            return 695
         elif size == 6:
-            return 603
+            return 611
         elif size == 7:
-            return 525
+            return 532
         elif size == 8:
-            return 453
+            return 458
         elif size >= 9:
-            return 385
-    elif 10742 <= income < 10928:
+            return 390
+    elif 10879 <= income < 11068:
         if size == 1:
-            return 1111
+            return 1125
         elif size == 2:
-            return 1004
+            return 1017
         elif size == 3:
-            return 903
+            return 914
         elif size == 4:
-            return 806
+            return 817
         elif size == 5:
-            return 716
+            return 725
         elif size == 6:
-            return 631
+            return 639
         elif size == 7:
-            return 551
+            return 558
         elif size == 8:
-            return 476
+            return 482
         elif size >= 9:
-            return 407
-    elif 10928 <= income < 11115:
+            return 412
+    elif 11068 <= income < 11258:
         if size == 1:
-            return 1147
+            return 1162
         elif size == 2:
-            return 1039
+            return 1052
         elif size == 3:
-            return 936
+            return 948
         elif size == 4:
-            return 838
+            return 849
         elif size == 5:
-            return 745
+            return 755
         elif size == 6:
-            return 658
+            return 667
         elif size == 7:
-            return 577
+            return 584
         elif size == 8:
-            return 500
+            return 507
         elif size >= 9:
-            return 429
-    elif 11115 <= income < 11302:
+            return 435
+    elif 11258 <= income < 11447:
         if size == 1:
-            return 1185
+            return 1200
         elif size == 2:
-            return 1074
+            return 1088
         elif size == 3:
-            return 970
+            return 982
         elif size == 4:
-            return 870
+            return 881
         elif size == 5:
-            return 776
+            return 786
         elif size == 6:
-            return 687
+            return 695
         elif size == 7:
-            return 603
+            return 611
         elif size == 8:
-            return 525
+            return 532
         elif size >= 9:
-            return 453
-    elif 11302 <= income < 11488:
+            return 458
+    elif 11447 <= income < 11636:
         if size == 1:
-            return 1223
+            return 1239
         elif size == 2:
-            return 1111
+            return 1125
         elif size == 3:
-            return 1004
+            return 1017
         elif size == 4:
-            return 903
+            return 914
         elif size == 5:
-            return 806
+            return 817
         elif size == 6:
-            return 716
+            return 725
         elif size == 7:
-            return 631
+            return 639
         elif size == 8:
-            return 551
+            return 558
         elif size >= 9:
-            return 476
-    elif 11488 <= income < 11675:
+            return 482
+    elif 11636 <= income < 11825:
         if size == 1:
-            return 1261
+            return 1278
         elif size == 2:
-            return 1147
+            return 1162
         elif size == 3:
-            return 1039
+            return 1052
         elif size == 4:
-            return 936
+            return 948
         elif size == 5:
-            return 838
+            return 849
         elif size == 6:
-            return 745
+            return 755
         elif size == 7:
-            return 658
+            return 667
         elif size == 8:
-            return 577
+            return 584
         elif size >= 9:
-            return 500
-    elif 11675 <= income < 11862:
+            return 507
+    elif 11825 <= income < 12014:
         if size == 1:
-            return 1301
+            return 1317
         elif size == 2:
-            return 1185
+            return 1200
         elif size == 3:
-            return 1074
+            return 1088
         elif size == 4:
-            return 970
+            return 982
         elif size == 5:
-            return 870
+            return 881
         elif size == 6:
-            return 776
+            return 786
         elif size == 7:
-            return 687
+            return 695
         elif size == 8:
-            return 603
+            return 611
         elif size >= 9:
-            return 525
-    elif income >= 11862:
+            return 532
+    elif income >= 12014:
         if size == 1:
-            return 1340
+            return 1358
         elif size == 2:
-            return 1223
+            return 1239
         elif size == 3:
-            return 1111
+            return 1125
         elif size == 4:
-            return 1004
+            return 1017
         elif size == 5:
-            return 903
+            return 914
         elif size == 6:
-            return 806
+            return 817
         elif size == 7:
-            return 716
+            return 725
         elif size == 8:
-            return 631
+            return 639
         elif size >= 9:
-            return 551
+            return 558
