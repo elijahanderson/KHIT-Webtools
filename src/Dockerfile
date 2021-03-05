@@ -18,6 +18,3 @@ RUN mv chromedriver /usr/bin/chromedriver
 
 # start uWSGI
 CMD ["uwsgi", "app.ini"]
-
-# start redis
-CMD ["python", "manage.py run_worker"]

@@ -18,6 +18,6 @@ def isl_rpa():
         with Connection(redis.from_url(current_app.config['REDIS_URL'])):
             q = Queue()
             task = q.enqueue(fremont_isl, from_date)
-        return render_template('isl_rpa.html', title='ISL Automation', loading=True, from_date=query)
+        return render_template('isl_rpa.html', title='ISL Automation', loading=True, from_date=from_date)
     return render_template('isl_rpa.html', title='ISL Automation')
 

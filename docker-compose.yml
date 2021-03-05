@@ -5,6 +5,7 @@ services:
   src:
     build: ./src
     container_name: src
+    image: src
     restart: always
     expose:
       - 8080
@@ -20,7 +21,7 @@ services:
 
   worker:
     image: src
-    command: python manage.py runworker
+    command: rq worker --name worker --url redis://redis:6379/0
     depends_on:
       - redis
 
