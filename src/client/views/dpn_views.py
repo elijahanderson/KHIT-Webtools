@@ -2,6 +2,7 @@ from flask import Blueprint, redirect, render_template, request,  url_for
 import json
 from os import remove
 from werkzeug.utils import secure_filename
+from traceback import print_exc
 from xlrd import XLRDError
 
 from client.forms.dpn_form import DPNForm
@@ -26,18 +27,21 @@ def dpn():
                     json.dump(output, outfile)
                 return redirect(url_for('dpn_views.display_categories', page_no=1))
             except KeyError as e:
+                print_exc()
                 error_msg = 'The CSV file you selected does not contain the expected columns. ' \
                             'Please ensure you selected' \
                             ' the correct file and that it is a DPN report. ' \
                             'If this error persists, contact Eli at eanderson@khitconsulting.com'
                 return render_template('dpn.html', title='Cash Receipt', form=form, error_msg=error_msg)
             except XLRDError as e:
+                print_exc()
                 error_msg = 'The XLS file you selected appears to be corrupted or has an outdated XLS format. ' \
                             'Open it on your local machine and save it as an Excel 97-2003 Workbook ' \
                             ' (*.xls) and then retry uploading it. If that still doesn\'t work, try uploading it as a '\
                             'CSV file instead.'
                 return render_template('dpn.html', title='Cash Receipt', form=form, error_msg=error_msg)
             except Exception as e:
+                print_exc()
                 error_msg = 'An unexpected error has occurred. If this error persists, contact Eli at ' \
                             'eanderson@khitconsulting.com with this error message: ' + str(e)
                 return render_template('dpn.html', title='Cash Receipt', form=form, error_msg=error_msg)
