@@ -11,6 +11,7 @@ from time import sleep
 from traceback import print_exc
 
 from infrastructure.drive_upload import upload_folder
+from infrastructure.email import send_gmail
 
 
 def create_isl(frame, staff, program_modifier, from_date, insurance_info):
@@ -560,7 +561,7 @@ def browser(from_date, to_date):
 
     # download and rename the report
     driver.find_element_by_id('CSV').click()
-    sleep(3)
+    sleep(10)
     filename = max(['csv' + '/' + f for f in os.listdir('csv')], key=os.path.getctime)
     shutil.move(filename, 'csv/client_insyst_ids.csv')
 
@@ -584,7 +585,7 @@ def browser(from_date, to_date):
     driver.implicitly_wait(10)
 
     # download and rename the report
-    driver.find_element_by_xpath('/html/body/form/span[5]/span/rdcondelement5/span/a/img').click()
+    driver.find_element_by_id('CSV').click()
     sleep(3)
     filename = max(['csv' + '/' + f for f in os.listdir('csv')], key=os.path.getctime)
     shutil.move(filename, 'csv/insurance_info.csv')
@@ -592,6 +593,7 @@ def browser(from_date, to_date):
     print('Exiting chromedriver...', end=' ')
     driver.close()
     driver.quit()
+
     print('Process killed.')
 
 
@@ -611,7 +613,7 @@ def fremont_isl(from_date):
         upload_folder(folder_path, '1lYsW4yfourbnFYJB3GLh6br7D1_3LOcd')
 
         for filename in os.listdir('csv'):
-            if not filename.endswith('.xlsx'):
+            if not (filename.endswith('.xlsx') or 'dpn' in filename):
                 os.remove('csv/%s' % filename)
         for filename in os.listdir('pdf'):
             os.remove('pdf/%s' % filename)
