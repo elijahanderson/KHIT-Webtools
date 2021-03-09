@@ -18,3 +18,6 @@ app.register_blueprint(dpn_blueprint)
 app.register_blueprint(fremont_blueprint)
 app.register_blueprint(isl_rpa_blueprint)
 app.secret_key = "secret key"
+app.config['REDIS_URL'] = 'redis://redis:6379/0'
+app.config['QUEUES'] = ['default']
+

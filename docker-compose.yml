@@ -5,9 +5,12 @@ services:
   src:
     build: ./src
     container_name: src
+    image: src
     restart: always
     expose:
       - 8080
+    depends_on:
+      - redis
 
   nginx:
     build: ./nginx
@@ -15,3 +18,12 @@ services:
     restart: always
     ports:
       - "80:80"
+
+  worker:
+    image: src
+    command: rq worker --name worker --url redis://redis:6379/0
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:6-alpine 
