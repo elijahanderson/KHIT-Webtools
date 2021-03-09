@@ -46,9 +46,10 @@
         </div>
         <br>
         <br>
-        {% for client, client_data in output %}
+        {% for dict_key, client_data in output %}
             {% if client_data.keys()|length > 1 %}
-            <h3>{{ client }} - {{ client_data['id_no'] }}</h3>
+            <h3>{{ dict_key.split('/')[0] }} - {{ client_data['id_no'] }}</h3>
+	    <h5>Program: {{ dict_key.split('/')[1] }}</h5>
             <table id="client-event-categories">
                 <colgroup>
                     <col span="1" style="width: 20%">

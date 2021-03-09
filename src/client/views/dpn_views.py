@@ -21,7 +21,6 @@ def dpn():
             form.file.data.save(filename)
             try:
                 output = modify_dpn(filename)
-                print(output)
                 remove(filename)
                 with open('json/output.json', 'w') as outfile:
                     json.dump(output, outfile)
@@ -57,9 +56,9 @@ def display_categories(page_no):
     output_split = {}
     pg = 1
     pages = []
-    for i in range(0, len(output.items()), 27):
+    for i in range(0, len(output.items()), 20):
         pages.append(pg)
-        for item in list(output.items())[i:i+27]:
+        for item in list(output.items())[i:i+20]:
             if pg in output_split.keys():
                 output_split[pg].append(item)
             else:

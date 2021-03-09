@@ -1,7 +1,7 @@
-import threading
+import redis
 
-from flask import Blueprint, redirect, render_template, request
-from traceback import print_exc
+from flask import Blueprint, current_app, redirect, render_template, request
+from rq import Queue, Connection
 
 from infrastructure.email import send_gmail
 from infrastructure.isl_rpa import fremont_isl
@@ -12,21 +12,12 @@ isl_rpa_blueprint = Blueprint('isl_rpa_views', __name__, template_folder='templa
 
 @isl_rpa_blueprint.route('/isl-rpa', methods=['GET', 'POST'])
 def isl_rpa():
-    def generate_rpa(**kwargs):
-        from_date = kwargs.get('query', {})
-        fremont_isl(query)
-                                
+    """ REST endpoint to handle generating ISLs. """
     if request.method == 'POST':
-        query = request.form['from-date']
-        thread = threading.Thread(target=generate_rpa, kwargs={'query': query})
-        try:
-            thread.start()
-        except Exception as e:
-            thread.join()
-            print('System encountered an error running Fremont ISL RPA:\n')
-            print_exc()
-            email_body = 'System encountered an error running Fremont ISL RPA: %s' % e
-            send_gmail('eanderson@khitconsulting.com', 'KHIT Report Notification', email_body)
-        return render_template('isl_rpa.html', title='ISL Automation', loading=True, from_date=query)
+        from_date = request.form['from-date']
+        with Connection(redis.from_url(current_app.config['REDIS_URL'])):
+            q = Queue()
+            task = q.enqueue(fremont_isl, from_date)
+        return render_template('isl_rpa.html', title='ISL Automation', loading=True, from_date=from_date)
     return render_template('isl_rpa.html', title='ISL Automation')
 
