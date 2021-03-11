@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="main-header" id="isl-content">
+	<h1>ISL Current Jobs</h1>
+        <br>
+	{% if jobs %}
+	    {% for job in jobs %}
+	    	{{ job.meta['from_date'] }}
+		{{ job.get_status }}
+		{{ job.result }}
+	    {% endfor %}
+	{% endif %}
+    </div>
+{% endblock content %}
