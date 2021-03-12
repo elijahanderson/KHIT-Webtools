@@ -4,10 +4,12 @@
 	<h1>ISL Current Jobs</h1>
         <br>
 	{% if jobs %}
-	    {% for job in jobs %}
-	    	{{ job.meta['from_date'] }}
-		{{ job.get_status }}
-		{{ job.result }}
+	    {% for job_id, data in jobs.items() %}
+	    	Date: {{ data[0] }}
+		<br>
+	    	Status: {{ data[1] }}
+		<br>
+		Result: {{ data[2] }}
 	    {% endfor %}
 	{% endif %}
     </div>
