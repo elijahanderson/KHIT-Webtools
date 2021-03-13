@@ -597,7 +597,7 @@ def browser(from_date, to_date):
     print('Process killed.')
 
 
-def fremont_isl(from_date):
+def fremont_isl(from_date, task_id):
     try:     
         from_date = pd.to_datetime(from_date)
         print('------------------------------ TRIGGERED ' + datetime.now().strftime('%Y.%m.%d %H:%M') +
@@ -618,8 +618,21 @@ def fremont_isl(from_date):
         for filename in os.listdir('pdf'):
             os.remove('pdf/%s' % filename)
         shutil.rmtree(folder_path)
+        jobfile = open('json/jobs.json', 'r')
+        jobs = json.load(jobfile)
+        jobs[task_id]['result'] = 'success'
+        jobfile.close()
+        jobfile = open('json/jobs.json', 'w')
+        json.dump(jobs, jobfile)
+        jobfile.close()
     except Exception as e:
         print('System encountered an error running Fremont ISL RPA:\n')
-        print_exc()
+        jobfile = open('json/jobs.json', 'r')
+        jobs = json.load(jobfile)
+        jobs[task_id]['result'] = 'failed'
+        jobfile.close()
+        jobfile = open('json/jobs.json', 'w')
+        json.dump(jobs, jobfile)
+        jobfile.close() 
         email_body = 'System encountered an error running Fremont ISL RPA: %s' % e
         send_gmail('eanderson@khitconsulting.com', 'KHIT Report Notification', email_body)
