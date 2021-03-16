@@ -27,7 +27,6 @@
 			    <img src="static/loader.gif" alt="started">
 			</td>
 			<td id={{ "finished-" + i|string }} style="display: none">finished</td>
-			<td>{{ data['result'] }}</td>
 
 		        <br>
 		    </tr>
@@ -38,25 +37,27 @@
 	{% endif %}
     </div>
     <script language="JavaScript">
+	    const jobs = {{jobs|tojson}};
 	    function statusListener() {
                 setInterval(getStatus, 5000);
             }
             function getStatus() {
-		var reader = new FileReader();
-		var jobs_txt = reader.readAsText('json/jobs.json');
-		var jobs = JSON.parse(jobs_txt);
-
+		//var reader = new FileReader();
+		//var jobs_txt = reader.readAsText('json/jobs.json');
+		//jobs = JSON.parse(jobs);
+		var i = 0;
 		for (var job_id in jobs) {
-		    if (jobs[job_id]['status'] == 'started') {
+		    if (jobs[job_id].get_status() == 'started') {
                     	document.getElementById('queued-'+i.toString()).style.display = "none";
 			document.getElementById('started-'+i.toString()).style.display = "inline";
 			document.getElementById('finished-'+i.toString()).style.display = "none";
 		    }
-		    else if (jobs[job_id]['status'] == 'finished') {
+		    else if (jobs[job_id].get_status() == 'finished') {
                         document.getElementById('queued-'+i.toString()).style.display = "none";
                         document.getElementById('started-'+i.toString()).style.display = "none";
                         document.getElementById('finished-'+i.toString()).style.display = "inline";
                     }
+		    i++;
 		}
             }
 	    window.onload = statusListener;

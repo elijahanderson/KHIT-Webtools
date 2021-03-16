@@ -1,3 +1,4 @@
+import json
 import os
 import pandas as pd
 import shutil
@@ -618,21 +619,21 @@ def fremont_isl(from_date, task_id):
         for filename in os.listdir('pdf'):
             os.remove('pdf/%s' % filename)
         shutil.rmtree(folder_path)
-        jobfile = open('json/jobs.json', 'r')
-        jobs = json.load(jobfile)
-        jobs[task_id]['result'] = 'success'
-        jobfile.close()
-        jobfile = open('json/jobs.json', 'w')
-        json.dump(jobs, jobfile)
-        jobfile.close()
+        #jobfile = open('json/jobs.json', 'r')
+        #jobs = json.load(jobfile)
+        #jobs[task_id]['result'] = 'success'
+        #jobfile.close()
+        #jobfile = open('json/jobs.json', 'w')
+        #json.dump(jobs, jobfile)
+        #jobfile.close()
     except Exception as e:
         print('System encountered an error running Fremont ISL RPA:\n')
-        jobfile = open('json/jobs.json', 'r')
-        jobs = json.load(jobfile)
-        jobs[task_id]['result'] = 'failed'
-        jobfile.close()
-        jobfile = open('json/jobs.json', 'w')
-        json.dump(jobs, jobfile)
-        jobfile.close() 
+        #jobfile = open('json/jobs.json', 'r')
+        #jobs = json.load(jobfile)
+        #jobs[task_id]['result'] = 'failed'
+        #jobfile.close()
+        #jobfile = open('json/jobs.json', 'w')
+        #json.dump(jobs, jobfile)
+        #jobfile.close() 
         email_body = 'System encountered an error running Fremont ISL RPA: %s' % e
         send_gmail('eanderson@khitconsulting.com', 'KHIT Report Notification', email_body)

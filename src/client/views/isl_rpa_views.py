@@ -27,7 +27,7 @@ def isl_rpa():
             jobfile = open('json/jobs.json', 'r')
             jobs = json.load(jobfile)
             print(jobs)
-            jobs[job_id] = {'from_date': from_date, 'status': job.get_status(), 'result': ''}
+            jobs[job_id] = {'from_date': from_date}
             jobfile.close()
             jobfile = open('json/jobs.json', 'w')
             json.dump(jobs, jobfile)
@@ -48,8 +48,6 @@ def isl_jobs():
             job = q.fetch_job(job_id)
             if job is None:
                 jobs.pop(job_id, None)
-            else:
-                jobs[job_id]['status'] = job.get_status()
             # TODO -- if job has failed, give user option to retry or delete it
         jobfile.close()
         jobfile = open('json/jobs.json', 'w')
