@@ -6,34 +6,32 @@
 	{% if jobs %}
 	    <table>
             	<colgroup>
-		    <col span="1" style="width: 60%">
-		    <col span="1" style="width: 20%">
-		    <col span="1" style="width: 20%">
+		    <col span="1" style="width: 55%">
+		    <col span="1" style="width: 15%">
+		    <col span="1" style="width: 15%">
+		    <col span="1" style="width: 15%">
   	        </colgroup>
 	        <tbody>
 		    <tr>
 			<th>ID</th>
 			<th>Date</th>
 			<th>Status</th>
+			<th>Result</th>
 		    </tr>
-		    {% set i = 0 %}
 	            {% for job_id, data in jobs.items() %}	
 		    <tr>
 		        <td>{{ job_id }}</td>
 		    	<td>{{ data['from_date'] }}</td>
-		        <br>
-			<td id={{ "queued-" + i|string }} style="display: inline">queued</td>
-			<td id={{ "started-" + i|string }} style="display: none">
-			    <img src="static/loader.gif" alt="started">
-			</td>
-			<td id={{ "finished-" + i|string }} style="display: none">finished</td>
-
-		        <br>
+			<td>{{ data['status'] }}</td>
+			<td>{{ data['result'] }}</td>
 		    </tr>
-		    {% set i = i + 1 %}
 		    {% endfor %}
 		</tbody>
+		<br>
+		<a class="btn" href="{{ url_for('isl_rpa_views.isl_jobs') }}">Refresh Status</a>
 	    </table>
+	{% else %}
+	    <p>No tasks in the queue.</p>
 	{% endif %}
     </div>
     <script language="JavaScript">
@@ -47,12 +45,12 @@
 		//jobs = JSON.parse(jobs);
 		var i = 0;
 		for (var job_id in jobs) {
-		    if (jobs[job_id].get_status() == 'started') {
+		    if (jobs[job_id]['status'] == 'started') {
                     	document.getElementById('queued-'+i.toString()).style.display = "none";
 			document.getElementById('started-'+i.toString()).style.display = "inline";
 			document.getElementById('finished-'+i.toString()).style.display = "none";
 		    }
-		    else if (jobs[job_id].get_status() == 'finished') {
+		    else if (jobs[job_id]['status'] == 'finished') {
                         document.getElementById('queued-'+i.toString()).style.display = "none";
                         document.getElementById('started-'+i.toString()).style.display = "none";
                         document.getElementById('finished-'+i.toString()).style.display = "inline";
@@ -60,6 +58,6 @@
 		    i++;
 		}
             }
-	    window.onload = statusListener;
+	    //window.onload = statusListener;
     </script>
 {% endblock content %}

@@ -599,6 +599,10 @@ def browser(from_date, to_date):
 
 
 def fremont_isl(from_date, task_id):
+    #jobs = current_app.config['JOBS']
+    #print('--------------------------------')
+    #print(jobs.get_jobs())
+    #print('--------------------------------')
     try:     
         from_date = pd.to_datetime(from_date)
         print('------------------------------ TRIGGERED ' + datetime.now().strftime('%Y.%m.%d %H:%M') +
@@ -619,21 +623,34 @@ def fremont_isl(from_date, task_id):
         for filename in os.listdir('pdf'):
             os.remove('pdf/%s' % filename)
         shutil.rmtree(folder_path)
-        #jobfile = open('json/jobs.json', 'r')
-        #jobs = json.load(jobfile)
+        
+        #jobfile = 'json/jobs.json'
+        #with open(jobfile, 'r') as f:
+            #jobs = json.load(f)
+            #jobs[task_id]['result'] = 'success'
+        #os.remove(jobfile)
+        #with open(jobfile, 'w') as f:
+             #json.dump(jobs, f, indent=4)
         #jobs[task_id]['result'] = 'success'
-        #jobfile.close()
-        #jobfile = open('json/jobs.json', 'w')
-        #json.dump(jobs, jobfile)
-        #jobfile.close()
+        #print('--------------------------------')
+        #print(jobs)
+        #print('--------------------------------')
+        return 'success'
     except Exception as e:
         print('System encountered an error running Fremont ISL RPA:\n')
-        #jobfile = open('json/jobs.json', 'r')
-        #jobs = json.load(jobfile)
+        #jobfile = 'json/jobs.json'
+        #with open(jobfile, 'r') as f:
+        #    jobs = json.load(f)
+        #    jobs[task_id]['result'] = 'failed'
+        #os.remove(jobfile)
+        #with open(jobfile, 'w') as f:
+        #     json.dump(jobs, f, indent=4)
         #jobs[task_id]['result'] = 'failed'
-        #jobfile.close()
-        #jobfile = open('json/jobs.json', 'w')
-        #json.dump(jobs, jobfile)
-        #jobfile.close() 
+        #print('--------------------------------')
+        #print(jobs)
+        #print('--------------------------------')
+        #current_app.config['JOBS'] = jobs
         email_body = 'System encountered an error running Fremont ISL RPA: %s' % e
         send_gmail('eanderson@khitconsulting.com', 'KHIT Report Notification', email_body)
+        return 'failed'
+
