@@ -482,7 +482,7 @@ def browser(from_date, to_date):
     # download and rename the report
     driver.implicitly_wait(5)
     driver.find_element_by_id('CSV').click()
-    sleep(3)
+    sleep(10)
     filename = max(['csv' + '/' + f for f in os.listdir('csv')], key=os.path.getctime)
     shutil.move(filename, 'csv/recipient_codes.csv')
 
@@ -599,10 +599,6 @@ def browser(from_date, to_date):
 
 
 def fremont_isl(from_date, task_id):
-    #jobs = current_app.config['JOBS']
-    #print('--------------------------------')
-    #print(jobs.get_jobs())
-    #print('--------------------------------')
     try:     
         from_date = pd.to_datetime(from_date)
         print('------------------------------ TRIGGERED ' + datetime.now().strftime('%Y.%m.%d %H:%M') +
@@ -611,10 +607,12 @@ def fremont_isl(from_date, task_id):
         to_date = from_date + timedelta(days=1)
         browser(from_date, to_date)
         isl(from_date)
+
         folder_path = '%s' % from_date.strftime('%Y-%m-%d')
         os.mkdir(folder_path)
         for filename in os.listdir('pdf'):
             shutil.move('pdf/%s' % filename, folder_path)
+
         upload_folder(folder_path, '1lYsW4yfourbnFYJB3GLh6br7D1_3LOcd')
 
         for filename in os.listdir('csv'):
@@ -623,33 +621,11 @@ def fremont_isl(from_date, task_id):
         for filename in os.listdir('pdf'):
             os.remove('pdf/%s' % filename)
         shutil.rmtree(folder_path)
-        
-        #jobfile = 'json/jobs.json'
-        #with open(jobfile, 'r') as f:
-            #jobs = json.load(f)
-            #jobs[task_id]['result'] = 'success'
-        #os.remove(jobfile)
-        #with open(jobfile, 'w') as f:
-             #json.dump(jobs, f, indent=4)
-        #jobs[task_id]['result'] = 'success'
-        #print('--------------------------------')
-        #print(jobs)
-        #print('--------------------------------')
+
         return 'success'
+    
     except Exception as e:
         print('System encountered an error running Fremont ISL RPA:\n')
-        #jobfile = 'json/jobs.json'
-        #with open(jobfile, 'r') as f:
-        #    jobs = json.load(f)
-        #    jobs[task_id]['result'] = 'failed'
-        #os.remove(jobfile)
-        #with open(jobfile, 'w') as f:
-        #     json.dump(jobs, f, indent=4)
-        #jobs[task_id]['result'] = 'failed'
-        #print('--------------------------------')
-        #print(jobs)
-        #print('--------------------------------')
-        #current_app.config['JOBS'] = jobs
         email_body = 'System encountered an error running Fremont ISL RPA: %s' % e
         send_gmail('eanderson@khitconsulting.com', 'KHIT Report Notification', email_body)
         return 'failed'

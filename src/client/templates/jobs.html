@@ -3,6 +3,7 @@
     <div class="main-header" id="isl-content">
 	<h1>ISL Jobs</h1>
         <br>
+	<a class="btn" href="{{ url_for('isl_rpa_views.isl_jobs') }}">Refresh</a>
 	{% if jobs %}
 	    <table>
             	<colgroup>
@@ -23,16 +24,24 @@
 		        <td>{{ job_id }}</td>
 		    	<td>{{ data['from_date'] }}</td>
 			<td>{{ data['status'] }}</td>
-			<td>{{ data['result'] }}</td>
+			{% if data['result'] == 'failed' %}
+			    <td>{{ data['result'] }};&nbsp;
+			    <a class="btn" href="{{ '/isl-rpa/retry-job-%(job_id)s' %
+				           {'job_id': job_id} }}">retry?</a></td>
+			{% else %}    
+			    <td>{{ data['result'] }}</td>
+			{% endif %}
 		    </tr>
 		    {% endfor %}
 		</tbody>
 		<br>
-		<a class="btn" href="{{ url_for('isl_rpa_views.isl_jobs') }}">Refresh Status</a>
 	    </table>
+	<br>
 	{% else %}
 	    <p>No tasks in the queue.</p>
+            <br>
 	{% endif %}
+	<a class="btn" href="{{ url_for('isl_rpa_views.isl_rpa') }}">Generate Another</a>
     </div>
     <script language="JavaScript">
 	    const jobs = {{jobs|tojson}};

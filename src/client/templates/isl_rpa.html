@@ -1,25 +1,5 @@
 {% extends "layout.html" %}
 {% block content %}
-    {% if loading %}
-        <div id="loading-icon" style="display: block" onload="waitTwoMins();">
-            <p>Generating ISLs... (this should take a minute or two)</p>
-            <img src="static/loader.gif">
-        </div>
-        <div class="main-header" id="success" style="display: none">
-	    <p>The ISL for {{ from_date }} has been successfully generated! Check it out at 
-	    <a href="https://drive.google.com/drive/folders/1lYsW4yfourbnFYJB3GLh6br7D1_3LOcd" target="_blank" rel="noopener noreferrer">the shared drive.</a></p>
-	</div>
-	<script language="JavaScript">
-            function waitTwoMins() {
-                setTimeout(showSuccess, 100000);
-            }
-            function showSuccess() {
-                document.getElementById('loading-icon').style.display = "none";
-                document.getElementById('success').style.display = "block";
-            }
-	    window.onload = waitTwoMins;
-    	</script>
-    {% else %}
     	<div class="main-header" id="isl-content">
             <h1>ISL Automation</h1>
             <br>
@@ -29,21 +9,11 @@
 		    <input type="date" id="from-date" name="from-date">
                     <br>
                     <br>
-                    <input type="submit" value="Submit">
-                    <br>
-                    <br>
+                    <input type="submit" value="Submit"
             	</div>
             </form>
+	    <br>
+	    <br>
+	    <a class="btn" href="{{ url_for('isl_rpa_views.isl_jobs') }}">Job Queue</a>
     	</div>
-
-    {% endif %}
-    <script language="JavaScript">
-        function waitTwoMins() {
-            setTimeout(showSuccess, 120000);
-        }
-        function showSuccess() {
-            document.getElementById('loading-icon').style.display = "none";
-            document.getElementById('success').style.display = "block";
-        }
-    </script>
 {% endblock content %}

@@ -7,7 +7,6 @@ from client.views.cash_receipt_views import cash_receipt_blueprint
 from client.views.dpn_views import dpn_blueprint
 from client.views.fremont_views import fremont_blueprint
 from client.views.isl_rpa_views import isl_rpa_blueprint
-from infrastructure.jobs import Jobs
 
 """ Initializes the app. """
 app = Flask(__name__)
