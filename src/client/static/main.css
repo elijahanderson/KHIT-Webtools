@@ -75,6 +75,17 @@ h1, h2, h3, h4, h5, h6 {
   color: #cbd5db;
 }
 
+.main-header .btn-border {
+  color: #444444;
+  text-decoration: none;
+  border: 1px solid #444444;
+}
+
+.main-header .btn-border:hover {
+  color: #cbd5db;
+  border: 1px solid #cbd5db;
+}
+
 .main-header .dict-btn {
   color: #444444;
   text-decoration: none;

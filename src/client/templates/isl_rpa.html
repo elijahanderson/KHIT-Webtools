@@ -5,14 +5,17 @@
             <br>
             <form method=POST action="{{ url_for('isl_rpa_views.isl_rpa') }}">
             	<div>
-		    <label for="from-date">Select date:</label>
+		    <label for="from-date">From Date:     </label>
 		    <input type="date" id="from-date" name="from-date">
+		    <br>
                     <br>
-                    <br>
-                    <input type="submit" value="Submit"
+		    <label for="to-date">Through Date:  </label>
+                    <input type="date" id="to-date" name="to-date">
+		    <p> (leave blank if only running for single date)</p>
+		    <br>
+		    <input type="submit" value="Submit">
             	</div>
             </form>
-	    <br>
 	    <br>
 	    <a class="btn" href="{{ url_for('isl_rpa_views.isl_jobs') }}">Job Queue</a>
     	</div>
