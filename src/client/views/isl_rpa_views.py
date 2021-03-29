@@ -19,9 +19,12 @@ def isl_rpa():
     if request.method == 'POST':
         from_date = request.form['from-date']
         to_date = request.form['to-date']
-        print(session['jobs'])
-        session['jobs'] = enqueue_date_range(from_date, to_date, session['jobs'])
-        session.modified = True
+        if session.get('jobs'):
+            session['jobs'] = enqueue_date_range(from_date, to_date, session['jobs'])
+            session.modified = True
+        else:
+            session['jobs'] = enqueue_date_range(from_date, to_date, {})
+            session.modified = True
         print(session['jobs'])
         return redirect(url_for('isl_rpa_views.isl_jobs'))
     return render_template('isl_rpa.html', title='ISL Automation')
@@ -32,6 +35,8 @@ def isl_jobs():
     """ REST endpoint for viewing RQ statuses. """
     with Connection(redis.from_url(current_app.config['REDIS_URL'])):
         q = Queue()
+        print(q.jobs)
+        print(q.job_ids)
         jobs = session['jobs']
         njobs = {}
         for job_id in jobs.keys():
