@@ -21,8 +21,6 @@ app.secret_key = "secret key"
 app.config['REDIS_URL'] = 'redis://redis:6379/0'
 app.config['QUEUES'] = ['default']
 
-
 @app.before_first_request
 def before_first_request():
     session['jobs'] = {}
-

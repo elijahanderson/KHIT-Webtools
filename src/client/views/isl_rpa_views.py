@@ -95,4 +95,3 @@ def enqueue_date_range(from_date, to_date, jobs):
                 job = q.enqueue(fremont_isl, fdate, job_id=job_id, result_ttl=86400)
                 jobs[job_id] = [fdate.strftime('%Y-%m-%d'), job.get_status(), '']
     return jobs
-
