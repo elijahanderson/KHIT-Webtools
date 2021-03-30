@@ -1,3 +1,4 @@
+import json
 import os
 import pandas as pd
 import shutil
@@ -234,7 +235,7 @@ def isl(from_date):
                                  'staff_id']]
     clients_only['actual_date'] = pd.to_datetime(clients_only.actual_date)
     clients_only = clients_only.rename(columns={'duration': 'duration_worker'})
-    clients_only['program_modifier_code'] = clients_only['program_modifier_code'].str.strip()
+    clients_only['program_modifier_code'] = clients_only['program_modifier_code'].astype(str).str.strip()
     clients_only = clients_only[clients_only['program_modifier_code'].isin(['RR', 'SMMH', 'SMHAD'])]
     clients_only = clients_only[clients_only['event_category_id'] == '4b9aebb1-34d7-4a06-b22f-1491fb725d8c']
     clients_only.reset_index(drop=True, inplace=True)
@@ -481,7 +482,7 @@ def browser(from_date, to_date):
     # download and rename the report
     driver.implicitly_wait(5)
     driver.find_element_by_id('CSV').click()
-    sleep(3)
+    sleep(10)
     filename = max(['csv' + '/' + f for f in os.listdir('csv')], key=os.path.getctime)
     shutil.move(filename, 'csv/recipient_codes.csv')
 
@@ -597,19 +598,17 @@ def browser(from_date, to_date):
     print('Process killed.')
 
 
-def fremont_isl(from_date):
-    try:     
-        from_date = pd.to_datetime(from_date)
-        print('------------------------------ TRIGGERED ' + datetime.now().strftime('%Y.%m.%d %H:%M') +
-              ' ------------------------------')
-        print('Running ISL report for ' + from_date.strftime('%Y.%m.%d'))    
-        to_date = from_date + timedelta(days=1)
-        browser(from_date, to_date)
-        isl(from_date)
-        folder_path = '%s' % from_date.strftime('%Y-%m-%d')
+def generate_isl(fdate):
+        print('Running ISL report for ' + fdate.strftime('%Y.%m.%d'))    
+        tdate = fdate + timedelta(days=1)
+        browser(fdate, tdate)
+        isl(fdate)
+
+        folder_path = '%s' % fdate.strftime('%Y-%m-%d')
         os.mkdir(folder_path)
         for filename in os.listdir('pdf'):
             shutil.move('pdf/%s' % filename, folder_path)
+
         upload_folder(folder_path, '1lYsW4yfourbnFYJB3GLh6br7D1_3LOcd')
 
         for filename in os.listdir('csv'):
@@ -618,8 +617,17 @@ def fremont_isl(from_date):
         for filename in os.listdir('pdf'):
             os.remove('pdf/%s' % filename)
         shutil.rmtree(folder_path)
+
+
+def fremont_isl(from_date):
+    try:     
+        from_date = pd.to_datetime(from_date)
+        print('------------------------------ TRIGGERED ' + datetime.now().strftime('%Y.%m.%d %H:%M') +
+              ' ------------------------------')
+        generate_isl(from_date)
+        return 'success'
     except Exception as e:
         print('System encountered an error running Fremont ISL RPA:\n')
-        print_exc()
         email_body = 'System encountered an error running Fremont ISL RPA: %s' % e
         send_gmail('eanderson@khitconsulting.com', 'KHIT Report Notification', email_body)
+        return 'failed'

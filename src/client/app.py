@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, session
 
 from client.views.home_page import home_page
 from client.views.aacog_views import aacog_blueprint
@@ -21,3 +21,6 @@ app.secret_key = "secret key"
 app.config['REDIS_URL'] = 'redis://redis:6379/0'
 app.config['QUEUES'] = ['default']
 
+@app.before_first_request
+def before_first_request():
+    session['jobs'] = {}

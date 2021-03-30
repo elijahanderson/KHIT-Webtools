@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="main-header" id="isl-content">
+	<h1>ISL Job Queue</h1>
+        <br>
+	<a class="btn" href="{{ url_for('isl_rpa_views.isl_jobs') }}" title="Refresh queue">
+		<i class="fa fa-refresh" aria-hidden="true"></i></a>
+	<a class="btn" href="{{ url_for('isl_rpa_views.isl_rpa') }}">
+                <i title="Generate an ISL" class="fa fa-plus" aria-hidden="true"></i></a>
+	<a class="btn" href="https://drive.google.com/drive/folders/1lYsW4yfourbnFYJB3GLh6br7D1_3LOcd" target="_blank" rel="noopener noreference">
+                <i title="ISL Reports Shared Drive" class="fa fa-google" aria-hidden="true"></i></a>
+	{% if jobs %}
+	    <table>
+            	<colgroup>
+		    <col span="1" style="width: 55%">
+		    <col span="1" style="width: 15%">
+		    <col span="1" style="width: 15%">
+		    <col span="1" style="width: 15%">
+  	        </colgroup>
+	        <tbody>
+		    <tr>
+			<th>ID</th>
+			<th>Date</th>
+			<th>Status</th>
+			<th>Result</th>
+		    </tr>
+	            {% for job_id, data in jobs.items() %}	
+		    <tr>
+		        <td>{{ job_id }}</td>
+			<td>{{ data['from_date'] }}</td>
+
+			{% if data['status'] == 'started' %}
+		 	    <td><img title="job started" src="{{ url_for('static', filename='loader.gif') }}">
+				    </img></td>
+			{% elif data['status'] == 'finished' %}
+			    <td><i title="success" class="fa fa-check" aria-hidden="true"></i></td>    
+		        {% else %}
+			    <td>{{ data['status'] }}</td>
+			{% endif %}
+
+			{% if data['result'] == 'failed' %}
+			<td><a style="display: inline;" class="btn" href="{{ '/isl-rpa/retry-job-%(job_id)s' % {'job_id': job_id} }}">failed; retry?</a></td>
+			{% elif data['result'] == 'success' %}
+			    <td><i title="success" class="fa fa-check" aria-hidden="true"></i></td>
+			{% else %}    
+			    <td>{{ data['result'] }}</td>
+			{% endif %}
+
+			<!-- <td><a title="Cancel job" class="btn" href="{{ '/isl-rpa/cancel-job-%(job_id)s' %
+					   		      {'job_id': job_id} }}">
+                		<i class="fa fa-ban" aria-hidden="true"></i></a></td>
+		        </tr>-->
+		    {% endfor %}
+		</tbody>
+	    </table>
+	<br>
+	{% else %}
+	    <p>No ISL jobs in the queue.</p>
+	{% endif %}
+	<a class="btn" href="{{ url_for('isl_rpa_views.isl_jobs') }}" title="Refresh queue">
+                <i class="fa fa-refresh" aria-hidden="true"></i></a>
+        <a class="btn" href="{{ url_for('isl_rpa_views.isl_rpa') }}">
+                <i title="Generate an ISL" class="fa fa-plus" aria-hidden="true"></i></a>
+	<a class="btn" href="https://drive.google.com/drive/folders/1lYsW4yfourbnFYJB3GLh6br7D1_3LOcd" target="_blank" rel="noopener noreference">
+                <i title="ISL Reports Shared Drive" class="fa fa-google" aria-hidden="true"></i></a>
+    </div>
+    <script language="JavaScript">
+	    const jobs = {{jobs|tojson}};
+	    function statusListener() {
+                setInterval(getStatus, 5000);
+            }
+            function getStatus() {
+		//var reader = new FileReader();
+		//var jobs_txt = reader.readAsText('json/jobs.json');
+		//jobs = JSON.parse(jobs);
+		var i = 0;
+		for (var job_id in jobs) {
+		    if (jobs[job_id]['status'] == 'started') {
+                    	document.getElementById('queued-'+i.toString()).style.display = "none";
+			document.getElementById('started-'+i.toString()).style.display = "inline";
+			document.getElementById('finished-'+i.toString()).style.display = "none";
+		    }
+		    else if (jobs[job_id]['status'] == 'finished') {
+                        document.getElementById('queued-'+i.toString()).style.display = "none";
+                        document.getElementById('started-'+i.toString()).style.display = "none";
+                        document.getElementById('finished-'+i.toString()).style.display = "inline";
+                    }
+		    i++;
+		}
+            }
+	    //window.onload = statusListener;
+    </script>
+{% endblock content %}
