@@ -25,7 +25,6 @@ def isl_rpa():
         else:
             session['jobs'] = enqueue_date_range(from_date, to_date, {})
             session.modified = True
-        print(session['jobs'])
         return redirect(url_for('isl_rpa_views.isl_jobs'))
     return render_template('isl_rpa.html', title='ISL Automation')
 
@@ -49,7 +48,6 @@ def isl_jobs():
 
         session['jobs'] = njobs
         session.modified = True
-        print(session['jobs'])
         df = pd.DataFrame.from_dict(njobs, orient='index', columns=['from_date', 'status', 'result'])
         print(df)
         sorted_jobs = df.sort_values(by=['from_date', 'status', 'result']).to_dict('index')
@@ -97,4 +95,3 @@ def enqueue_date_range(from_date, to_date, jobs):
                 job = q.enqueue(fremont_isl, fdate, job_id=job_id, result_ttl=86400)
                 jobs[job_id] = [fdate.strftime('%Y-%m-%d'), job.get_status(), '']
     return jobs
-

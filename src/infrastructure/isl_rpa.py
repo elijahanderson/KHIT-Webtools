@@ -631,4 +631,3 @@ def fremont_isl(from_date):
         email_body = 'System encountered an error running Fremont ISL RPA: %s' % e
         send_gmail('eanderson@khitconsulting.com', 'KHIT Report Notification', email_body)
         return 'failed'
-
