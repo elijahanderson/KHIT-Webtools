@@ -17,6 +17,7 @@ def modify(df):
     event_categories['event'] = event_categories['event'].apply(
         lambda v: str(v).lower().replace('-', '').replace('/', '').replace(' ', '').strip()
     )
+    df = df[df['event_name'] == df['service']]
     df['event_name'] = df['event_name'].apply(
         lambda v: str(v).lower().replace('-', '').replace('/', '').replace(' ', '').strip()
     )
@@ -25,7 +26,7 @@ def modify(df):
         dict_key = key[0] + '/' + key[1]
         output_dict[dict_key] = {'id_no': str(frame['id_no'].iloc[0])}
         for idx, row in frame.iterrows():
-            if row['event_name'] in event_categories['event'].unique():
+            if row['event_name'] in event_categories['event'].unique() and row['is_noshow'] == False:
                 category = event_categories.iloc[
                     event_categories.event[event_categories.event == row['event_name']].index
                 ]['category'].iloc[0].strip()
