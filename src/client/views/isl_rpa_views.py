@@ -36,15 +36,16 @@ def isl_jobs():
         q = Queue()
         print(q.jobs)
         print(q.job_ids)
-        jobs = session['jobs']
         njobs = {}
-        for job_id in jobs.keys():
-            job = q.fetch_job(job_id)
-            if job is None:
-                print(f"{job_id} not found; removing from queue.")
-            else:
-                result = job.result if job.result is not None and job.result is not ''  else ''
-                njobs[job_id] = [jobs[job_id][0], job.get_status(), result]
+        if session.get('jobs'):
+            jobs = session['jobs']
+            for job_id in jobs.keys():
+                job = q.fetch_job(job_id)
+                if job is None:
+                    print(f"{job_id} not found; removing from queue.")
+                else:
+                    result = job.result if job.result is not None and job.result is not ''  else ''
+                    njobs[job_id] = [jobs[job_id][0], job.get_status(), result]
 
         session['jobs'] = njobs
         session.modified = True
