@@ -21,7 +21,12 @@ def create_isl(frame, staff, program_modifier, from_date, insurance_info):
     isl_pdf.set_font(family='Arial', size=11)
     isl_pdf.cell(w=0, h=4, txt='ALAMEDA COUNTY BEHAVIORAL HEALTH CARE - MENTAL HEALTH', align='C', ln=2)
     isl_pdf.cell(w=0, h=5, txt='INDIVIDUAL STAFF LOG', align='C', ln=2)
-    isl_pdf.cell(w=0, h=10, txt='REPORTING UNIT:    01EI1 - City of Fremont MMH', align='L', ln=0)
+    if program_modifier == 2:    
+        isl_pdf.cell(w=0, h=10, txt='REPORTING UNIT:    01EI3 - City of Fremont MMH', align='L', ln=0)
+    elif program_modifier == 3:
+        isl_pdf.cell(w=0, h=10, txt='REPORTING UNIT:    01EI2 - City of Fremont MMH', align='L', ln=0)
+    else:
+        isl_pdf.cell(w=0, h=10, txt='REPORTING UNIT:    01EI1 - City of Fremont MMH', align='L', ln=0)
     isl_pdf.cell(w=0, h=10, txt='STAFF NAME:    %s' % staff, align='R', ln=1)
     isl_pdf.cell(w=0, h=10, txt='DATE OF SERVICES:    %s' % from_date.strftime('%m/%d/%y'))
     if not pd.isna(frame['cert_number'].iloc[0]):
