@@ -17,7 +17,9 @@ def modify(df):
     event_categories['event'] = event_categories['event'].apply(
         lambda v: str(v).lower().replace('-', '').replace('/', '').replace(' ', '').strip()
     )
-    df = df[df['event_name'] == df['service']]
+    df = df[(df['event_name'] != 'Documentation Time') 
+            & (df['event_name'] != 'Phone Service Time') 
+            & (df['event_name'] != 'Diversion Data - Closing')]
     df['event_name'] = df['event_name'].apply(
         lambda v: str(v).lower().replace('-', '').replace('/', '').replace(' ', '').strip()
     )
