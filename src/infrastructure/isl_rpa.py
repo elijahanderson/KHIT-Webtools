@@ -47,12 +47,12 @@ def create_isl(frame, staff, program_modifier, from_date, insurance_info):
     isl_pdf.multi_cell(w=30, h=6, txt='Client #\nMedicare', border=1)
     isl_pdf.x = isl_pdf.x + 60
     isl_pdf.y = isl_pdf.y - 12
-    isl_pdf.cell(w=30, h=12, txt='INSYST #', border=1)
+    isl_pdf.cell(w=20, h=12, txt='INSYST #', border=1)
     isl_pdf.cell(w=40, h=12, txt='Client Name', border=1)
-    isl_pdf.multi_cell(w=40, h=6, txt='County\nProcedure', border=1)
-    isl_pdf.x = isl_pdf.x + 170
+    isl_pdf.multi_cell(w=56, h=6, txt='County\nProcedure', border=1)
+    isl_pdf.x = isl_pdf.x + 176
     isl_pdf.y = isl_pdf.y - 12
-    isl_pdf.multi_cell(w=20, h=6, txt='Proc#\nDate', border=1)
+    isl_pdf.multi_cell(w=14, h=6, txt='Proc#\nDate', border=1)
     isl_pdf.x = isl_pdf.x + 190
     isl_pdf.y = isl_pdf.y - 12
     isl_pdf.multi_cell(w=12, h=4, txt='InSyst\nProc.\nCode', border=1)
@@ -92,12 +92,12 @@ def create_isl(frame, staff, program_modifier, from_date, insurance_info):
             else:
                 isl_pdf.cell(w=30, h=12, txt='', border=1)
             if not pd.isna(row['id_number']):
-                isl_pdf.cell(w=30, h=12, txt=str(int(row['id_number'])), border=1)
+                isl_pdf.cell(w=20, h=12, txt=str(int(row['id_number'])), border=1)
             else:
-                isl_pdf.cell(w=30, h=12, txt='', border=1)
+                isl_pdf.cell(w=20, h=12, txt='', border=1)
             isl_pdf.cell(w=40, h=12, txt=row['full_name'], border=1)
-            isl_pdf.cell(w=40, h=12, txt=row['event_name'], border=1)
-            isl_pdf.cell(w=20, h=12, txt=row['actual_date'].strftime('%m/%d/%y'), border=1)
+            isl_pdf.cell(w=56, h=12, txt=row['event_name'], border=1)
+            isl_pdf.cell(w=14, h=12, txt=row['actual_date'].strftime('%m/%d/%y'), border=1)
             if not pd.isna(row['std_code']):
                 isl_pdf.cell(w=12, h=12, txt=str(int(row['std_code'])), border=1)
             else:
@@ -110,14 +110,18 @@ def create_isl(frame, staff, program_modifier, from_date, insurance_info):
                 isl_pdf.cell(w=11, h=12, txt='1', border=1)
             else:
                 isl_pdf.cell(w=11, h=12, txt='', border=1)
-            if pd.isna(row['COF_TOTAL_DURATION']):
-                isl_pdf.cell(w=10, h=12, txt='', border=1)
-            else:
+            if not pd.isna(row['COF_TOTAL_DURATION']):
                 isl_pdf.cell(w=10, h=12,
                              txt='{:02d}:{:02d}'.format(*divmod(int(row['COF_TOTAL_DURATION']), 60)),
                              border=1)
+            elif not pd.isna(row['duration_plans']):
+                isl_pdf.cell(w=10, h=12,
+                             txt='{:02d}:{:02d}'.format(*divmod(int(row['duration_plans']), 60)),
+                             border=1)
+            else:
+                isl_pdf.cell(w=10, h=12, txt='', border=1)
             if pd.isna(row['duration_worker']):
-                isl_pdf.cell(w=10, h=12, txt='N/A', border=1)
+                isl_pdf.cell(w=10, h=12, txt='', border=1)
             else:
                 isl_pdf.cell(w=10, h=12, txt=row['duration_worker'], border=1)
             if pd.isna(row['general_location']):
@@ -191,7 +195,7 @@ def create_isl(frame, staff, program_modifier, from_date, insurance_info):
 
     isl_pdf.x = 235
     isl_pdf.y = vert_col_y
-    subtotal = frame['COF_TOTAL_DURATION'].sum()
+    subtotal = frame['COF_TOTAL_DURATION'].sum() + frame['duration_plans'].sum()
     isl_pdf.cell(w=10, h=10, txt='{:02d}:{:02d}'.format(*divmod(int(subtotal), 60)), border=1, ln=2)
     isl_pdf.cell(w=10, h=10, txt='', border=1, ln=2)
     isl_pdf.cell(w=10, h=10, txt='', border=1, ln=2)
@@ -223,6 +227,7 @@ def isl(from_date):
     staff_only = pd.read_csv('csv/only_staff.csv')
     staff_ids = pd.read_csv('csv/staff_ids.csv')
     clients_only = pd.read_csv('csv/clients_only.csv')
+    plans = pd.read_csv('csv/plans.csv')
     recipient_codes = pd.read_csv('csv/recipient_codes.csv')
     other_codes = pd.read_csv('csv/other_codes.csv')
     insyst_ids = pd.read_csv('csv/client_insyst_ids.csv')
@@ -235,14 +240,25 @@ def isl(from_date):
     staff_only = staff_only[staff_only['staff_name'].isin(needed_staff)]
     staff_only.drop_duplicates(subset=['event_log_id'], inplace=True)
 
+    # add program modifier codes to client treatment/service plan CSV
+    plans['staff_name'] = plans['staff_name'].str.strip()
+    plans = plans[plans['staff_name'].isin(needed_staff)]
+    plans = plans.assign(program_modifier_code='SMMH')
+    plans = plans[['full_name', 'id_no', 'staff_name', 'actual_date', 'event_log_id', 'event_name',
+                   'duration_plans', 'general_location', 'program_modifier_code', 'event_category_id',
+                   'staff_id']]
     clients_only = clients_only[['full_name', 'id_no', 'staff_name', 'actual_date', 'event_log_id', 'event_name',
                                  'duration', 'general_location', 'program_modifier_code', 'event_category_id',
                                  'staff_id']]
+    # merge client plans to the rest of their services
+    clients_only = pd.concat([clients_only, plans], sort=False, ignore_index=True)
     clients_only['actual_date'] = pd.to_datetime(clients_only.actual_date)
     clients_only = clients_only.rename(columns={'duration': 'duration_worker'})
     clients_only['program_modifier_code'] = clients_only['program_modifier_code'].astype(str).str.strip()
     clients_only = clients_only[clients_only['program_modifier_code'].isin(['RR', 'SMMH', 'SMHAD'])]
-    clients_only = clients_only[clients_only['event_category_id'] == '4b9aebb1-34d7-4a06-b22f-1491fb725d8c']
+    # only retrieve activities and treatment/service plans
+    clients_only = clients_only[(clients_only['event_category_id'] == '4b9aebb1-34d7-4a06-b22f-1491fb725d8c') | 
+            (clients_only['event_category_id'] == '5c7bd496-d420-47db-8996-dfabf90f10b6')]
     clients_only.reset_index(drop=True, inplace=True)
     clients_only['general_location'] = clients_only['general_location'].apply(lambda v: get_loc_code(v))
 
@@ -254,10 +270,14 @@ def isl(from_date):
 
     staff_only = staff_only.merge(recipient_codes, on=['event_log_id'])
 
-    merged = pd.concat([staff_only, clients_only], axis=0, sort=False, ignore_index=True)
+    print('w/ Clients:\n', clients_only)
+    print('Staff only:\n', staff_only)
+
+    merged = pd.concat([staff_only, clients_only], sort=False, ignore_index=True)
     merged = merged.merge(staff_ids, on=['staff_id'], how='left')
     merged['program_modifier_code'] = merged['program_modifier_code'].fillna('maa')
     merged['program_modifier_code'] = merged['program_modifier_code'].apply(lambda v: modifier_to_num(v))
+    print('Merged:\n', merged)
 
     insurance_info = pd.read_csv('csv/insurance_info.csv')
     insurance_info.drop_duplicates(inplace=True)
@@ -284,6 +304,8 @@ def insurance_lookup(insurance_info, row):
 
 
 def get_loc_code(val):
+    if isinstance(val, int) or pd.isna(val):
+        return val
     val = str(val).strip()
     if val == 'Telehealth':
         return 20
@@ -595,6 +617,36 @@ def browser(from_date, to_date):
     sleep(3)
     filename = max(['csv' + '/' + f for f in os.listdir('csv')], key=os.path.getctime)
     shutil.move(filename, 'csv/insurance_info.csv')
+    
+    driver.close()
+    driver.switch_to.window(driver.window_handles[0])
+    driver.implicitly_wait(5)
+    driver.switch_to.frame(cr_frame1)
+    driver.implicitly_wait(5)
+    driver.switch_to.frame(cr_frame2)
+    driver.implicitly_wait(5)
+    sleep(3)
+
+    # 6 Client Service/Treatment Plan Events
+    driver.implicitly_wait(10)
+    driver.find_element_by_id('grdMain_ObjectName_5').click()
+    driver.switch_to.default_content()
+    driver.implicitly_wait(5)
+    driver.switch_to.default_content()
+    driver.implicitly_wait(5)
+    driver.switch_to.window(driver.window_handles[-1])
+    driver.implicitly_wait(5)
+    driver.find_element_by_xpath('//*[@id="RP1_1A"]').send_keys(from_date.strftime('%m/%d/%Y'))
+    driver.find_element_by_xpath('//*[@id="RP1_1B"]').send_keys(to_date.strftime('%m/%d/%Y'))
+    driver.find_element_by_xpath('//*[@id="Submit"]').click()
+
+    # download and rename the report
+    driver.implicitly_wait(5)
+    driver.find_element_by_id('CSV').click()
+    driver.implicitly_wait(5)
+    sleep(3)
+    filename = max(['csv' + '/' + f for f in os.listdir('csv')], key=os.path.getctime)
+    shutil.move(filename, 'csv/plans.csv')
 
     print('Exiting chromedriver...', end=' ')
     driver.close()
@@ -636,3 +688,4 @@ def fremont_isl(from_date):
         email_body = 'System encountered an error running Fremont ISL RPA: %s' % e
         send_gmail('eanderson@khitconsulting.com', 'KHIT Report Notification', email_body)
         return 'failed'
+
