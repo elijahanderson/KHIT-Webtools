@@ -685,7 +685,7 @@ def fremont_isl(from_date):
         return 'success'
     except Exception as e:
         print('System encountered an error running Fremont ISL RPA:\n')
-        email_body = 'System encountered an error running Fremont ISL RPA: %s' % e
+        email_body = f"System encountered an error generating the ISL for {from_date}: {e}"
         send_gmail('eanderson@khitconsulting.com', 'KHIT Report Notification', email_body)
         return 'failed'
 
