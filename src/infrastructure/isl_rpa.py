@@ -202,18 +202,14 @@ def create_isl(frame, staff, program_modifier, from_date, insurance_info):
     isl_pdf.cell(w=10, h=10, txt='{:02d}:{:02d}'.format(*divmod(int(maa_time), 60)), border=1, ln=2)
     isl_pdf.cell(w=10, h=10, txt='{:02d}:{:02d}'.format(*divmod(int(maa_time + subtotal), 60)), border=1, ln=1)
 
-    isl_pdf.cell(w=0, h=15, txt='I hereby certify, under penalty of perjury, that the information contained in this'
-                                ' document is accurate and free from fraudulent claiming.', ln=1)
-
+    isl_pdf.y = 150
+    isl_pdf.multi_cell(w=0, h=3, txt='I hereby certify, under penalty of perjury, that the information contained in\n'
+                                      'this document is accurate and free from fraudulent claiming.')
+    isl_pdf.y = 155
     isl_pdf.cell(w=150, h=10, txt='Signature')
     isl_pdf.cell(w=20, h=10, txt='Date', ln=1)
-    if isl_pdf.y < 175:
-        isl_pdf.cell(w=200, h=10, txt='_______________________________________________________________________________'
-                                      '_________________________________________')
-    else:
-        isl_pdf.y = 175
-        isl_pdf.cell(w=200, h=10, txt='_______________________________________________________________________________'
-                                      '_________________________________________')
+    isl_pdf.cell(w=200, h=10, txt='_______________________________________________________________________________'
+                                  '__________________________')
     isl_pdf.output('pdf/isl_%s_%s_%s_%s.pdf' %
                    (staff.split(', ')[0].lower(), staff.split(', ')[1].lower(), from_date.strftime('%Y-%m-%d'),
                     num_to_modifier(program_modifier)))
@@ -403,7 +399,7 @@ def browser(from_date, to_date):
 
     # navigate to and generate canned staff idv events report (only_staff.csv)
     driver.find_element_by_xpath('/html/body/form/div[3]/div[1]/div[1]/ul/li[19]/span').click()
-    driver.find_element_by_xpath('/html/body/form/div[3]/div[1]/div[1]/div[5]/div/div[1]/ul/li[6]').click()
+    driver.find_element_by_xpath('/html/body/form/div[3]/div[1]/div[1]/div[5]/div/div[1]/ul/li[7]').click()
     driver.find_element_by_xpath('/html/body/form/div[3]/div[1]/div[1]/div[5]/div/div[2]/ul/li[9]').click()
     cd_frame1 = driver.find_element_by_xpath('/html/body/form/div[3]/div[2]/div[2]/div/div[17]/div/div/div/div/iframe')
     driver.switch_to.frame(cd_frame1)
@@ -442,7 +438,7 @@ def browser(from_date, to_date):
     driver.switch_to.default_content()
     driver.implicitly_wait(5)
     driver.find_element_by_xpath('/html/body/form/div[3]/div[1]/div[1]/ul/li[19]/span').click()
-    driver.find_element_by_xpath('//*[@id="product-header-mega-menu-level1-id"]/li[3]').click()
+    driver.find_element_by_xpath('/html/body/form/div[3]/div[1]/div[1]/div[5]/div/div[1]/ul/li[4]').click()
     driver.find_element_by_xpath('//*[@id="d66dc6ec-03be-41b2-b808-206523c7e33d"]/li[2]').click()
     cd_frame1 = driver.find_element_by_xpath('//*[@id="MainContent_ctl36"]/iframe')
     driver.switch_to.frame(cd_frame1)
@@ -481,7 +477,7 @@ def browser(from_date, to_date):
     driver.switch_to.default_content()
     driver.implicitly_wait(5)
     driver.find_element_by_xpath('/html/body/form/div[3]/div[1]/div[1]/ul/li[19]/span').click()
-    driver.find_element_by_xpath('/html/body/form/div[3]/div[1]/div[1]/div[5]/div/div[1]/ul/li[2]').click()
+    driver.find_element_by_xpath('/html/body/form/div[3]/div[1]/div[1]/div[5]/div/div[1]/ul/li[3]').click()
     driver.find_element_by_xpath('/html/body/form/div[3]/div[1]/div[1]/div[5]/div/div[2]/ul[1]/li[2]').click()
     cr_frame1 = driver.find_element_by_xpath('/html/body/form/div[3]/div[2]/div[2]/div/div[17]/div/div/div/div/iframe')
     driver.switch_to.frame(cr_frame1)
@@ -592,7 +588,7 @@ def browser(from_date, to_date):
     sleep(10)
     filename = max(['csv' + '/' + f for f in os.listdir('csv')], key=os.path.getctime)
     shutil.move(filename, 'csv/client_insyst_ids.csv')
-
+    
     driver.close()
     driver.switch_to.window(driver.window_handles[0])
     driver.implicitly_wait(5)
@@ -614,7 +610,7 @@ def browser(from_date, to_date):
 
     # download and rename the report
     driver.find_element_by_id('CSV').click()
-    sleep(3)
+    sleep(20)
     filename = max(['csv' + '/' + f for f in os.listdir('csv')], key=os.path.getctime)
     shutil.move(filename, 'csv/insurance_info.csv')
     
@@ -644,7 +640,7 @@ def browser(from_date, to_date):
     driver.implicitly_wait(5)
     driver.find_element_by_id('CSV').click()
     driver.implicitly_wait(5)
-    sleep(3)
+    sleep(20)
     filename = max(['csv' + '/' + f for f in os.listdir('csv')], key=os.path.getctime)
     shutil.move(filename, 'csv/plans.csv')
 
@@ -656,24 +652,24 @@ def browser(from_date, to_date):
 
 
 def generate_isl(fdate):
-        print('Running ISL report for ' + fdate.strftime('%Y.%m.%d'))    
-        tdate = fdate + timedelta(days=1)
-        browser(fdate, tdate)
-        isl(fdate)
+    print('Running ISL report for ' + fdate.strftime('%Y.%m.%d'))    
+    tdate = fdate + timedelta(days=1)
+    browser(fdate, tdate)
+    isl(fdate)
 
-        folder_path = '%s' % fdate.strftime('%Y-%m-%d')
-        os.mkdir(folder_path)
-        for filename in os.listdir('pdf'):
-            shutil.move('pdf/%s' % filename, folder_path)
+    folder_path = '%s' % fdate.strftime('%Y-%m-%d')
+    os.mkdir(folder_path)
+    for filename in os.listdir('pdf'):
+        shutil.move('pdf/%s' % filename, folder_path)
 
-        upload_folder(folder_path, '1lYsW4yfourbnFYJB3GLh6br7D1_3LOcd')
+    upload_folder(folder_path, '1lYsW4yfourbnFYJB3GLh6br7D1_3LOcd')
 
-        for filename in os.listdir('csv'):
-            if not (filename.endswith('.xlsx') or 'dpn' in filename):
-                os.remove('csv/%s' % filename)
-        for filename in os.listdir('pdf'):
-            os.remove('pdf/%s' % filename)
-        shutil.rmtree(folder_path)
+    for filename in os.listdir('csv'):
+        if not (filename.endswith('.xlsx') or 'dpn' in filename):
+            os.remove('csv/%s' % filename)
+    for filename in os.listdir('pdf'):
+        os.remove('pdf/%s' % filename)
+    shutil.rmtree(folder_path)
 
 
 def fremont_isl(from_date):
